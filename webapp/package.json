@@ -28,6 +28,8 @@
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "install": "^0.12.2",
+    "lodash": "^4.17.11",
+    "lorem-ipsum": "^1.0.6",
     "node-sass": "4.9.4",
     "npm": "^6.4.1",
     "react": "^16.6.0",

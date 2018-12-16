@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import * as React from 'react';
+import * as dotProp from 'dot-prop-immutable';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { TextField, Button } from 'react-md';
@@ -12,7 +13,10 @@ import { push } from 'connected-react-router';
 class CrearRemito extends Component<CrearRemitoProps, any> {
   constructor(props) {
     super(props);
-    this.state = { estado: 'pendiente', nroRemito: '4564' };
+
+    const sucursal = dotProp.get(props, 'history.location.state.nombre');
+
+    this.state = { estado: 'pendiente', nroRemito: '4564', sucursal };
   }
 
   handleChange = (value, event) => {

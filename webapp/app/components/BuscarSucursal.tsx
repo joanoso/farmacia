@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import * as _ from 'lodash';
 import * as React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -8,11 +9,32 @@ import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText, DatePicker, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
+import {
+  DataTable,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableColumn
+} from 'react-md';
 
 class BuscarSucursal extends Component<BuscarSucursalProps, any> {
   constructor(props) {
     super(props);
-    this.state = { estado: 'pendiente', nroRemito: '4564' };
+    this.state = {
+      sucursales: [
+        {
+          numero: '001',
+          nombre: 'Pepe',
+          selected: false
+        },
+        {
+          numero: '003',
+          nombre: 'Pepapa',
+          selected: false
+        }
+      ],
+      sucursalSelected: undefined
+    };
   }
 
   handleChange = (value, event) => {
@@ -23,27 +45,16 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
     this.setState({ ...this.state, [name]: value });
   };
 
-  OBJECT_ITEMS = [
-    {
-      label: 'Simple',
-      value: 'simple'
-    },
-    {
-      label: 'Complejo',
-      value: 'complejo'
-    }
-  ];
+  toogle = (index, checked, ev) => {
+    const sucursales = _.cloneDeep(this.state.sucursales);
 
-  OBJECT_ITEMS_REMITO = [
-    {
-      label: 'Borrador',
-      value: 'borrador'
-    },
-    {
-      label: 'Pendiente',
-      value: 'pendiente'
-    }
-  ];
+    _.forEach(sucursales, suc => {
+      suc.selected = false;
+    });
+
+    sucursales[index - 1].selected = true;
+    this.setState({ sucursales, sucursalSelected: sucursales[index - 1] });
+  };
 
   render() {
     return (
@@ -88,14 +99,15 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
             </CardText>
           </Card>
 
-          <Grid >
-            <Cell offset={10} size={2} >
-            <Button
+          <Grid>
+            <Cell offset={10} size={2}>
+              <Button
                 onClick={() => {
                   this.props.dispatch(push('/buscarSucursal'));
                 }}
                 raised
-                default>
+                default
+              >
                 Cancelar
               </Button>
               <Button
@@ -110,6 +122,46 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
               </Button>
             </Cell>
           </Grid>
+
+          <Card className="md-block-centered">
+            <DataTable
+              baseId="simple-selectable-table"
+              indeterminate
+              /*               onRowToggle={this.toogle}
+               */
+            >
+              <TableHeader>
+                <TableRow>
+                  <TableColumn grow>Lorem 1</TableColumn>
+                  <TableColumn>Lorem 2</TableColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {this.state.sucursales.map((item, i) => (
+                  <TableRow
+                    key={i}
+                    selected={item.selected}
+                    onCheckboxClick={this.toogle}
+                  >
+                    <TableColumn>{item.numero}</TableColumn>
+                    <TableColumn>{item.nombre}</TableColumn>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </DataTable>
+          </Card>
+          <Button
+            onClick={() => {
+              this.props.dispatch(
+                push('/crearRemito', this.state.sucursalSelected)
+              );
+            }}
+            raised
+            primary
+            disabled={!this.state.sucursalSelected}
+          >
+            Seleccionar
+          </Button>
         </div>
       </div>
     );
