@@ -1,0 +1,43 @@
+// intro 
+.landing {
+	background-image: url('../../assets/img/home_2.jpg');
+	flex-grow:1;
+	text-align: center;
+	padding: 10em 0 16em 0;
+	@media screen and (max-width: $screen-sm) {
+		padding: 7em 0 7em 0;
+	}
+	h1 {
+		font-size: 50px;
+		color: $brand-white;
+		font-weight: 300;
+		line-height: 1.15;
+		@media screen and (max-width: $screen-sm) {
+			font-size: 36px;
+		}
+	}
+	.landing-subtitle {
+		max-width: 500px;
+		margin: 0 auto;
+		h2 {
+			font-size: 20px;
+			line-height: 1.55;
+			color: rgba(255,255,255,.7);
+			font-weight: 300;
+			a {
+				color: rgba(255,255,255,1);
+				&:hover {
+					color: rgba(255,255,255,.7);
+				}
+			}
+		}
+	}
+}
+
+.landing-content{
+	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: fadein 1s; /* Firefox < 16 */
+	-ms-animation: fadein 1s; /* Internet Explorer */
+	-o-animation: fadein 1s; /* Opera < 12.1 */
+	animation: fadein 1s;
+}

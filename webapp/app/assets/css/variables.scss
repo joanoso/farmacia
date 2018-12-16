@@ -1,0 +1,14 @@
+@import 'react-md/src/scss/react-md';
+
+$screen-lg: 1200px;
+$screen-md: 992px;
+$screen-sm: 768px;
+$screen-xs: 480px;
+
+$brand-white: #fafafa;
+
+// Variable overrides
+$md-primary-color: $md-blue-700;
+$md-secondary-color: $md-purple-a-400;
+
+@include react-md-everything;

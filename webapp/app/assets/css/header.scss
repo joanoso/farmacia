@@ -1,0 +1,17 @@
+@import '~react-md/src/scss/react-md';
+
+//@include react-md-theme-colors($md-light-blue-500, $md-orange-a-200, false);
+
+.toolbar-custom {
+  background-color: #fafafa !important;
+  //color: $primary-color;
+  h2,
+  button {
+    color: $md-primary-color;
+  }
+}
+
+.toolbar-div {
+  min-height: 64px;
+  height: 64px;
+}

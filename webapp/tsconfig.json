@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./src/main/webapp/dist/",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./src/main/webapp/**/*"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    /* ... */
+  }
+}

@@ -1,0 +1,10 @@
+export const AUTH_USER = 'AUTH_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const CHANGE_MENU = 'CHANGE_MENU';
+
+export const ME_FROM_TOKEN = 'ME_FROM_TOKEN';
+export const ME_FROM_TOKEN_SUCCESS = 'ME_FROM_TOKEN_SUCCESS';
+export const ME_FROM_TOKEN_FAILURE = 'ME_FROM_TOKEN_FAILURE';
+
+export const START_FETCHING = 'START_FETCHING';
+export const END_FETCHING = 'END_FETCHING';

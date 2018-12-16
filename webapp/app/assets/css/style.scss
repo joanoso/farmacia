@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import 'variables';
+@import 'header';
+@import 'login';
+@import 'landing';
+@import 'drawer';
+@import 'react-md/src/scss/react-md';
+
+// Variable overrides
+$md-primary-color: $md-indigo-400;
+$md-secondary-color: $md-purple-a-400;
+
+@include react-md-everything;
+
+/* general tag styles */
+
+.feature {
+  background-image: url('../../assets/img/home_2.jpg');
+  height: 100%;
+}
+
+#root,
+body,
+html,
+#root > div {
+  height: 100%;
+}
+
+.outer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.main-container {
+  //padding: 10px;
+  display: flex;
+  flex-grow: 1;
+  background-image: url('../../assets/img/home_2.jpg');
+}
+
+body {
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
+  margin: 0;
+}
+
+a {
+  cursor: pointer;
+}
+
+h5 {
+  font-size: 1.4em;
+}
+
+ul li {
+  list-style: none;
+}
+
+.btn {
+  border: 0;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ############# end general styles ############# */
+
+.page-header {
+  background-color: #1976d2;
+  height: 50px;
+  font-size: 20px;
+  color: #fafafa;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  -webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.fullWidth {
+  background-color: #fafafa !important;
+  width: 100%;
+}
+
+.page-content {
+  padding: 10px;
+}
+
+.md-picker-container .md-text-field-container {
+  top: -6px;
+}
+
+.md-menu--select-field .md-select-field__toggle{
+  top: -6px;
+}
+
+.md-picker-container,
+.md-menu--select-field {
+  width: 100%;
+}

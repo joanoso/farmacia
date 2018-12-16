@@ -1,0 +1,80 @@
+/* Estilos de Side Drawer */
+
+$lightShadow: #6f6f6f;
+$backgroundWhite: #ddd;
+
+.header-toolbar {
+  background-image: url('../../assets/img/sidenav-header.jpg');
+  background-size: 300px 100%;
+  height: 200px;
+
+  .footer {
+    padding-left: 16px;
+    font-weight: 500;
+    height: 35%;
+    padding-top: 10px;
+    color: $brand-white;
+    background-color: rgba(0, 0, 0, 0.23);
+
+    .name {
+      font-size: 16px;
+      color: #fafafa;
+    }
+
+    .mail {
+      font-size: 14px;
+      color: #fafafa;
+    }
+  }
+
+  .user-info {
+    height: 65%;
+    overflow: hidden;
+  }
+}
+
+.md-list.md-list--drawer {
+  background-color: #ddd !important;
+  height: calc(100% - 200px);
+}
+
+.md-list.md-list--drawer button {
+  padding: 20px 0 20px 30px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.25s ease-in-out;
+  text-transform: none !important;
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+.md-list.md-list--drawer button:hover {
+  z-index: 5;
+  background-color: $brand-white;
+  box-shadow: 0 2px 4px $lightShadow;
+}
+
+.md-drawer--left {
+  width: 300px !important;
+}
+
+.drawer-button {
+  width: 100% !important;
+  height: 60px !important;
+}
+
+.drawer-button > div i {
+  color: $md-primary-color !important;
+}
+
+.md-list.md-list--drawer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.md-list.md-list--drawer::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+.md-list.md-list--drawer::-webkit-scrollbar-thumb {
+  background: $md-primary-color;
+}
