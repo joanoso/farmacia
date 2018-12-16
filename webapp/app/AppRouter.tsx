@@ -12,7 +12,8 @@ import Login from './components/auth/Login';
 import Signout from './components/auth/Signout';
 import Signup from './components/auth/Signup';
 import Feature from './Feature';
-import CrearRemito from "./components/CrearRemito";
+import CrearRemito from './components/CrearRemito';
+import BuscarSucursal from './components/BuscarSucursal';
 
 export const createAppRouter = (store: Store<AppStore>, history: History) => {
   const app = (
@@ -24,7 +25,8 @@ export const createAppRouter = (store: Store<AppStore>, history: History) => {
           <Route path="/feature" component={Feature} />
           <Route path="/signout" component={Signout} />
           <Route path="/login" component={Login} />
-            <Route path="/crearRemito" component={CrearRemito} />
+          <Route path="/crearRemito" component={CrearRemito} />
+          <Route path="/buscarSucursal" component={BuscarSucursal} />
         </App>
       </ConnectedRouter>
     </Provider>

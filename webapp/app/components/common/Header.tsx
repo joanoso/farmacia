@@ -127,7 +127,7 @@ class Header extends Component<IStateProps & IDispatchProps, HeaderState> {
                     className="toolbar-custom"
                     nav={<Button onClick={() => this.changeSideBarStatus()}
                                  icon>menu</Button>}
-                    title="Aplicación de Muestra"
+                    title="FarmaSalud"
                 />
                 <SideDrawer />
             </div>

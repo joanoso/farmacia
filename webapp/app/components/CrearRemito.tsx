@@ -7,6 +7,7 @@ import { TextField, Button } from 'react-md';
 import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText, DatePicker, SelectField } from 'react-md';
+import { push } from 'connected-react-router';
 
 class CrearRemito extends Component<CrearRemitoProps, any> {
   constructor(props) {
@@ -108,7 +109,16 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
                     value={this.state.sucursal}
                     disabled={true}
                   />
-                    <Button raised primary iconClassName="fa fa-search">Buscar</Button>
+                  <Button
+                    onClick={() => {
+                      this.props.dispatch(push('/buscarSucursal'));
+                    }}
+                    raised
+                    primary
+                    iconClassName="fa fa-search"
+                  >
+                    Buscar
+                  </Button>
                 </Cell>
               </Grid>
             </CardText>
