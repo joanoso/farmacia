@@ -52,8 +52,11 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
       suc.selected = false;
     });
 
-    sucursales[index - 1].selected = true;
-    this.setState({ sucursales, sucursalSelected: sucursales[index - 1] });
+    sucursales[index - 1].selected = checked;
+    this.setState({
+      sucursales,
+      sucursalSelected: checked ? sucursales[index - 1] : undefined
+    });
   };
 
   render() {
@@ -100,26 +103,28 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
           </Card>
 
           <Grid>
-            <Cell offset={10} size={2}>
-              <Button
-                onClick={() => {
-                  this.props.dispatch(push('/buscarSucursal'));
-                }}
-                raised
-                default
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={() => {
-                  this.props.dispatch(push('/buscarSucursal'));
-                }}
-                raised
-                primary
-                iconClassName="fa fa-search"
-              >
-                Buscar
-              </Button>
+            <Cell size={12}>
+              <div className="buttons-right">
+                <Button
+                  onClick={() => {
+                    this.props.dispatch(push('/buscarSucursal'));
+                  }}
+                  raised
+                  default
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  onClick={() => {
+                    this.props.dispatch(push('/buscarSucursal'));
+                  }}
+                  raised
+                  primary
+                  iconClassName="fa fa-search"
+                >
+                  Buscar
+                </Button>
+              </div>
             </Cell>
           </Grid>
 
@@ -150,18 +155,25 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
               </TableBody>
             </DataTable>
           </Card>
-          <Button
-            onClick={() => {
-              this.props.dispatch(
-                push('/crearRemito', this.state.sucursalSelected)
-              );
-            }}
-            raised
-            primary
-            disabled={!this.state.sucursalSelected}
-          >
-            Seleccionar
-          </Button>
+
+          <Grid>
+            <Cell size={12}>
+              <div className="buttons-right">
+                <Button
+                  onClick={() => {
+                    this.props.dispatch(
+                      push('/crearRemito', this.state.sucursalSelected)
+                    );
+                  }}
+                  raised
+                  primary
+                  disabled={!this.state.sucursalSelected}
+                >
+                  Seleccionar
+                </Button>
+              </div>
+            </Cell>
+          </Grid>
         </div>
       </div>
     );
