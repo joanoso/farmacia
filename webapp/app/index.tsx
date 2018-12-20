@@ -10,5 +10,5 @@ const history = createBrowserHistory();
 const store = createAppStore(true, history);
 const router = createAppRouter(store, history);
 
-store.dispatch(push('/login'));
+//store.dispatch(push('/login'));
 ReactDOM.render(router, document.querySelector('#root'));

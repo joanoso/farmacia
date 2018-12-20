@@ -1,6 +1,6 @@
 package com.tmp.bfwg.service.impl;
 
-import com.tmp.bfwg.model.User;
+import com.tmp.bfwg.model.Usuario;
 import com.tmp.bfwg.repository.UserRepository;
 import com.tmp.bfwg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findByUsername(String username ) throws UsernameNotFoundException {
-        User u = userRepository.findByUsername( username );
+    public Usuario findByUsername(String username ) throws UsernameNotFoundException {
+        Usuario u = userRepository.findByUsername( username );
         return u;
     }
 
-    public User findById( Long id ) throws AccessDeniedException {
-        User u = userRepository.findById( id ).orElse(null);
+    public Usuario findById(Long id ) throws AccessDeniedException {
+        Usuario u = userRepository.findById( id ).orElse(null);
         return u;
     }
 
-    public List<User> findAll() throws AccessDeniedException {
-        List<User> result = userRepository.findAll();
+    public List<Usuario> findAll() throws AccessDeniedException {
+        List<Usuario> result = userRepository.findAll();
         return result;
     }
 }

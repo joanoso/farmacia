@@ -6,12 +6,12 @@ import thunk from 'redux-thunk';
 import reduxMiddleware from 'react-block-ui/reduxMiddleware';
 import { Auth } from './reducers/auth';
 import { Sys } from './reducers/sys';
-import reducers from './reducers';
+import rootReducer from './reducers';
 
 export interface AppStore {
   auth: Auth;
   sys: Sys;
-  routing: object;
+  router: object;
 }
 
 // Para poder acceder al store como un singleton.
@@ -36,7 +36,7 @@ export const createAppStore = (
   }
 
   store = createStore(
-    connectRouter(history)(reducers),
+    rootReducer(history),
     {
       auth: { authenticated: localStorage.getItem('token') ? true : false }
     },

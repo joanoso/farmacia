@@ -1,9 +1,9 @@
 package com.tmp.bfwg.repository;
 
-import com.tmp.bfwg.model.User;
+import com.tmp.bfwg.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<Usuario, Long> {
+    Usuario findByUsername(String username);
 }
 

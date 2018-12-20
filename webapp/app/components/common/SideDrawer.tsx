@@ -14,12 +14,17 @@ class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
         super(props);
     }
 
-    handleVisibility = (visible) => {
+    handleVisibility = () => {
         this.props.dispatch(changeMenu());
     };
 
+    onMenuPress = (path: string) => {
+        this.props.dispatch(push(path));
+        this.handleVisibility();
+    }
+
     it = [
-        <Button flat iconChildren="home" key="crearRemito" onClick={()=> {this.props.dispatch(push("/crearRemito"))}}  className="drawer-button">
+        <Button flat iconChildren="home" key="crearRemito" onClick={() => this.onMenuPress("/crearRemito")} className="drawer-button">
             Crear Remito
         </Button>,
         { divider: true },
@@ -28,8 +33,9 @@ class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
             iconChildren="chat_bubble_outline"
             key="home2"
             className="drawer-button"
+            onClick={() => this.onMenuPress("/login")}
         >
-            Segundo
+            Login
         </Button>,
         <Button
             flat

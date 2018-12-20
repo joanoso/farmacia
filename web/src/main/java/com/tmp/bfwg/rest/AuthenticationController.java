@@ -1,13 +1,11 @@
 package com.tmp.bfwg.rest;
 
-
-import com.tmp.bfwg.model.User;
 import com.tmp.bfwg.model.UserTokenState;
+import com.tmp.bfwg.model.Usuario;
 import com.tmp.bfwg.security.TokenHelper;
 import com.tmp.bfwg.security.auth.JwtAuthenticationRequest;
 import com.tmp.bfwg.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping( value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping(value = "/auth", produces = {"application/json"})
 public class AuthenticationController {
 
     @Autowired
@@ -43,26 +41,26 @@ public class AuthenticationController {
 //    @Autowired
 //    private DeviceProvider deviceProvider;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest,
-            HttpServletResponse response
+        @RequestBody JwtAuthenticationRequest authenticationRequest,
+        HttpServletResponse response
     ) throws AuthenticationException, IOException {
 
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
+            new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getUsername(),
+                authenticationRequest.getPassword()
+            )
         );
 
         // Inject into security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // token creation
-        User user = (User)authentication.getPrincipal();
-        String jws = tokenHelper.generateToken( user.getUsername());
+        Usuario user = (Usuario) authentication.getPrincipal();
+        String jws = tokenHelper.generateToken(user.getUsername());
         int expiresIn = tokenHelper.getExpiredIn();
         // Return the token
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
@@ -70,14 +68,14 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public ResponseEntity<?> refreshAuthenticationToken(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Principal principal
-            ) {
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Principal principal
+    ) {
 
-        String authToken = tokenHelper.getToken( request );
+        String authToken = tokenHelper.getToken(request);
 
-      //  Device device = deviceProvider.getCurrentDevice(request);
+        //  Device device = deviceProvider.getCurrentDevice(request);
 
         if (authToken != null && principal != null) {
 
@@ -97,7 +95,7 @@ public class AuthenticationController {
     public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
         userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
         Map<String, String> result = new HashMap<>();
-        result.put( "result", "success" );
+        result.put("result", "success");
         return ResponseEntity.accepted().body(result);
     }
 

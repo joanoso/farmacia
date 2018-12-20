@@ -35,7 +35,7 @@ export const login = (
 ) => async (dispatch: Dispatch<AuthAction | SysAction>) => {
     try {
         dispatch({ type: START_FETCHING });
-        const response = await axios.post('/api/login', loginInfo);
+        const response = await axios.post('/auth/login', loginInfo);
         dispatch({ type: END_FETCHING, payload: '' });
         dispatch({ type: AUTH_USER, user: response.data.user });
         localStorage.setItem('token', response.data.token);

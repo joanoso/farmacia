@@ -6,15 +6,15 @@ create table student
    primary key(id)
 );
 
-create table usuario
-(
-   id NUMBER not null,
-   username varchar(255) not null,
-   password varchar(255) not null,
-   primary key(id)
-);
+--create table usuario
+--(
+--   id NUMBER not null,
+--   username varchar(255) not null,
+--   password varchar(255) not null,
+--   primary key(id)
+--);
 
-create table USERS
+create table USUARIO
 (
    id NUMBER not null,
    username varchar(255) not null,
@@ -39,4 +39,44 @@ create table USER_AUTHORITY (
    authority_id NUMBER not null,
    PRIMARY key(user_id,authority_id)
 );
+
+create table SUCURSAL (
+   id NUMBER not null,
+   numero NUMBER not null,
+   nombre varchar(255) not null,
+   direccion varchar(255) not null,
+   localidad varchar(255) not null,
+   primary key(id)
+);
+
+create table PRODUCTO (
+   id NUMBER not null,
+   descripcion varchar(255) not null,
+   marca varchar(255) not null,
+   primary key(id)
+);
+
+
+create table STOCK_SUCURSAL (
+   idSucursal NUMBER not null,
+   idProducto NUMBER not null,
+   cantidad NUMBER not null,
+   primary key(idSucursal,idProducto)
+);
+
+create table REMITO (
+   id NUMBER not null,
+   estado_id NUMBER not null,
+   sucursal_destino_id NUMBER not null,
+   primary key(id)
+);
+
+create table DETALLE_REMITO (
+   idRemito NUMBER not null,
+   idProducto NUMBER not null,
+   cantidad NUMBER not null,
+   primary key(idRemito,idProducto)
+);
+
+
 

@@ -1,6 +1,6 @@
 package com.tmp.bfwg.service.impl;
 
-import com.tmp.bfwg.model.User;
+import com.tmp.bfwg.model.Usuario;
 import com.tmp.bfwg.repository.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        Usuario user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
@@ -56,7 +56,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         LOGGER.debug("Changing password for user '"+ username + "'");
 
-        User user = (User) loadUserByUsername(username);
+        Usuario user = (Usuario) loadUserByUsername(username);
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);

@@ -16,25 +16,25 @@ import {
   TableRow,
   TableColumn
 } from 'react-md';
+import SimpleSelectionTable from "../components/common/SimpleSelectionTable"
 
 class BuscarSucursal extends Component<BuscarSucursalProps, any> {
   constructor(props) {
     super(props);
     this.state = {
-      sucursales: [
-        {
-          numero: '001',
-          nombre: 'Pepe',
-          selected: false
-        },
-        {
-          numero: '003',
-          nombre: 'Pepapa',
-          selected: false
-        }
-      ],
+      sucursales: [],
       sucursalSelected: undefined
     };
+  }
+
+  onSearchSucursales() {
+    axios.post("/api/sucursales/filtered", {
+      nombre: this.state.nombre,
+      localidad: this.state.localidad,
+      numero: this.state.numero
+    }).then(res => {
+      this.setState({ ...this.state, sucursales: res.data })
+    })
   }
 
   handleChange = (value, event) => {
@@ -57,6 +57,11 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
       sucursales,
       sucursalSelected: checked ? sucursales[index - 1] : undefined
     });
+  };
+
+   tableConfig = {
+    columnsToShow: ["numero", "nombre", "direccion", "localidad"],
+    titles:["Número", "Nombre", "Dirección", "Localidad"]
   };
 
   render() {
@@ -116,7 +121,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
                 </Button>
                 <Button
                   onClick={() => {
-                    this.props.dispatch(push('/buscarSucursal'));
+                    this.onSearchSucursales();
                   }}
                   raised
                   primary
@@ -128,52 +133,9 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
             </Cell>
           </Grid>
 
-          <Card className="md-block-centered">
-            <DataTable
-              baseId="simple-selectable-table"
-              indeterminate
-              /*               onRowToggle={this.toogle}
-               */
-            >
-              <TableHeader>
-                <TableRow>
-                  <TableColumn grow>Lorem 1</TableColumn>
-                  <TableColumn>Lorem 2</TableColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {this.state.sucursales.map((item, i) => (
-                  <TableRow
-                    key={i}
-                    selected={item.selected}
-                    onCheckboxClick={this.toogle}
-                  >
-                    <TableColumn>{item.numero}</TableColumn>
-                    <TableColumn>{item.nombre}</TableColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </DataTable>
-          </Card>
-
-          <Grid>
-            <Cell size={12}>
-              <div className="buttons-right">
-                <Button
-                  onClick={() => {
-                    this.props.dispatch(
-                      push('/crearRemito', this.state.sucursalSelected)
-                    );
-                  }}
-                  raised
-                  primary
-                  disabled={!this.state.sucursalSelected}
-                >
-                  Seleccionar
-                </Button>
-              </div>
-            </Cell>
-          </Grid>
+          <SimpleSelectionTable data={this.state.sucursales}
+            config={this.tableConfig}
+          />
         </div>
       </div>
     );

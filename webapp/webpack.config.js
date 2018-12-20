@@ -98,10 +98,17 @@ module.exports = {
     compress: true,
     port: 9000,
     historyApiFallback: true,
+    historyApiFallback: {
+      index: './tmp/index.html',
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
         secure: false
+      },
+       '/auth': {
+              target: 'http://localhost:8080',
+              secure: false
       }
     }
   }

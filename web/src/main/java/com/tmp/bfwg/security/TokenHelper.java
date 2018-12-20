@@ -1,7 +1,7 @@
 package com.tmp.bfwg.security;
 
 import com.tmp.bfwg.common.TimeProvider;
-import com.tmp.bfwg.model.User;
+import com.tmp.bfwg.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -146,7 +146,7 @@ public class TokenHelper {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
+        Usuario user = (Usuario) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         return (

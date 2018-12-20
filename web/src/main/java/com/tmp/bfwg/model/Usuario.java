@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="USERS")
-public class User implements UserDetails {
+@Table(name="Usuario")
+public class Usuario implements UserDetails {
 
     @Id
     @Column(name = "id")

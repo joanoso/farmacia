@@ -1,6 +1,6 @@
 package com.tmp.bfwg.rest;
 
-import com.tmp.bfwg.model.User;
+import com.tmp.bfwg.model.Usuario;
 import com.tmp.bfwg.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,13 +23,13 @@ public class UserController {
 
     @RequestMapping( method = GET, value = "/user/{userId}" )
     @PreAuthorize("hasRole('ADMIN')")
-    public User loadById(@PathVariable Long userId ) {
+    public Usuario loadById(@PathVariable Long userId ) {
         return this.userService.findById( userId );
     }
 
     @RequestMapping( method = GET, value= "/user/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> loadAll() {
+    public List<Usuario> loadAll() {
         return this.userService.findAll();
     }
 
@@ -41,7 +41,7 @@ public class UserController {
      */
     @RequestMapping("/whoami")
     @PreAuthorize("hasRole('USER')")
-    public User user(Principal user) {
+    public Usuario user(Principal user) {
         return this.userService.findByUsername(user.getName());
     }
 }

@@ -12,7 +12,7 @@ import {Student} from "../../../appOld/common/model/Student";
 class Login extends Component<LoginProps, LoginState> {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: '', students: [] };
+        this.state = { username: '', password: '' };
     }
 
     componentWillUnmount() {
@@ -31,17 +31,17 @@ class Login extends Component<LoginProps, LoginState> {
 
     onClickTraer = () => {
 
-        axios.get('/api/students').then(
+      /*   axios.get('/api/students').then(
             (resp: AxiosResponse<Student[]>) => {
                 this.setState({...this.state, students: resp.data});
             }
         ).catch((err) => {
             console.log(err.response.data.error);
-        });
+        }); */
 
     }
 
-    renderStudents() {
+ /*    renderStudents() {
         return this.state.students.map(
             (student: Student) => {
                 return (
@@ -51,7 +51,7 @@ class Login extends Component<LoginProps, LoginState> {
                 );
             }
         );
-    }
+    } */
 
     render() {
         return (
@@ -128,7 +128,6 @@ interface PropsFromDispatch {
 interface LoginState {
     username: string;
     password: string;
-    students : any[]
 }
 
 type LoginProps = PropsFromState &

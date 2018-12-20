@@ -14,9 +14,9 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
   constructor(props) {
     super(props);
 
-    const sucursal = dotProp.get(props, 'history.location.state.nombre');
+    const sucursal = dotProp.get(props, 'history.location.state.nombre', undefined);
 
-    this.state = { estado: 'pendiente', nroRemito: '4564', sucursal };
+    this.state = { estado: 'pendiente', nroRemito: '45622224', sucursal };
   }
 
   handleChange = (value, event) => {
