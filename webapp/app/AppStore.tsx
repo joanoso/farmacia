@@ -7,11 +7,13 @@ import reduxMiddleware from 'react-block-ui/reduxMiddleware';
 import { Auth } from './reducers/auth';
 import { Sys } from './reducers/sys';
 import rootReducer from './reducers';
+import { Form } from './reducers/form';
 
 export interface AppStore {
   auth: Auth;
   sys: Sys;
   router: object;
+  form: Form
 }
 
 // Para poder acceder al store como un singleton.

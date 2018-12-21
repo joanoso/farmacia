@@ -59,9 +59,9 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
     });
   };
 
-   tableConfig = {
-    columnsToShow: ["numero", "nombre", "direccion", "localidad"],
-    titles:["Número", "Nombre", "Dirección", "Localidad"]
+  tableConfig = {
+    columnsToShow: ['numero', 'nombre', 'direccion', 'localidad'],
+    titles: ['Número', 'Nombre', 'Dirección', 'Localidad']
   };
 
   render() {
@@ -133,7 +133,8 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
             </Cell>
           </Grid>
 
-          <SimpleSelectionTable data={this.state.sucursales}
+          <SimpleSelectionTable
+            data={this.state.sucursales}
             config={this.tableConfig}
           />
         </div>
