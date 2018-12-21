@@ -25,7 +25,7 @@ class SimpleSelectionTable extends Component<SimpleSelectionTableProps, any> {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const currentData = this.props.data;
-    if (currentData !== this.state.data) {
+    if (currentData !== prevProps.data) {
       this.setState({ data: currentData })
     }
   }
