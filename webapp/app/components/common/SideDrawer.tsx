@@ -8,6 +8,7 @@ import { User } from '../../common/model/User';
 
 import { Button, Drawer, Toolbar } from 'react-md';
 import { changeMenu } from '../../actions/SysActions';
+import { setCurrentObject } from '../../reducers/form';
 
 class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
     constructor(props) {
@@ -19,6 +20,7 @@ class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
     };
 
     onMenuPress = (path: string) => {
+        this.props.dispatch(setCurrentObject(undefined));
         this.props.dispatch(push(path));
         this.handleVisibility();
     }

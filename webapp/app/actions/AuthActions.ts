@@ -38,7 +38,7 @@ export const login = (
         const response = await axios.post('/auth/login', loginInfo);
         dispatch({ type: END_FETCHING, payload: '' });
         dispatch({ type: AUTH_USER, user: response.data.user });
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token', response.data.access_token);
         callback();
     } catch (e) {
         dispatch({ type: END_FETCHING, payload: '' });

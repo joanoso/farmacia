@@ -63,7 +63,8 @@ public class AuthenticationController {
         String jws = tokenHelper.generateToken(user.getUsername());
         int expiresIn = tokenHelper.getExpiredIn();
         // Return the token
-        return ResponseEntity.ok(new UserTokenState(jws, expiresIn));
+
+        return ResponseEntity.ok(new UserTokenState(jws, expiresIn, user));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
@@ -83,7 +84,8 @@ public class AuthenticationController {
             String refreshedToken = tokenHelper.refreshToken(authToken);
             int expiresIn = tokenHelper.getExpiredIn();
 
-            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn));
+		// todo Buscar User aca tmb
+            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, null));
         } else {
             UserTokenState userTokenState = new UserTokenState();
             return ResponseEntity.accepted().body(userTokenState);

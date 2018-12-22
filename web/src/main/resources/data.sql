@@ -14,7 +14,7 @@ INSERT INTO AUTHORITY (id, name) VALUES (3, 'ROLE_AUXILIAR_FARMACEUTICO');
 INSERT INTO AUTHORITY (id, name) VALUES (4, 'ROLE_AUXILIAR');
 INSERT INTO AUTHORITY (id, name) VALUES (5, 'JEFATURA_COMPRAS');
 
-INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
+INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 2);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 1);
 
 INSERT INTO SUCURSAL (id, direccion, numero,nombre,localidad) VALUES (1,'Montes de Oca 2179',5,'Las Flores', 'Castelar');

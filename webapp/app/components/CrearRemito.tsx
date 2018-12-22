@@ -9,14 +9,26 @@ import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText, DatePicker, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
+import { setCurrentObject } from '../reducers/form';
 
 class CrearRemito extends Component<CrearRemitoProps, any> {
   constructor(props) {
     super(props);
 
-    const sucursal = dotProp.get(props, 'history.location.state.nombre', undefined);
+    // Chequeo si tengo currentObj
+    if (props.currentObj) {
+      const { estado, nroRemito, sucursal, tipoRemito } = props.currentObj;
+      this.state = { estado, nroRemito, sucursal, tipoRemito }
+      const sucursalNew = dotProp.get(props, 'history.location.state.id', undefined);
+      const productos = dotProp.get(props, 'history.location.state.productos', []);
 
-    this.state = { estado: 'pendiente', nroRemito: '45622224', sucursal };
+      this.state = { ...this.state, sucursal: sucursalNew, productos }
+    } else {
+      this.state = { estado: '', nroRemito: '', sucursal: '', tipoRemito: '' , productos: []}
+    }
+
+
+    //this.state = { estado: 'pendiente', nroRemito: '45622224', sucursal };
   }
 
   handleChange = (value, event) => {
@@ -48,6 +60,18 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
       value: 'pendiente'
     }
   ];
+
+  renderProductos = (prods) => {
+     return prods.map(p => {
+      return (<div>{p.id}</div>)
+    })
+  }
+
+  sucursalMask = (nroSucursal: number) => {
+    if (nroSucursal == null) return undefined;
+    if (nroSucursal === 1) return "Lalala";
+    if (nroSucursal === 2) return "Hibrido";
+  }
 
   render() {
     return (
@@ -85,6 +109,7 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
                     label="Tipo de Remito"
                     placeholder="Tipo de Remito"
                     className="md-cell"
+                    value={this.state.tipoRemito}
                     menuItems={this.OBJECT_ITEMS}
                     onChange={this.handleChangeComplex('tipoRemito')}
                   />
@@ -110,11 +135,12 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
                     name="sucursal"
                     id="sucursal"
                     label="Sucursal"
-                    value={this.state.sucursal}
+                    value={this.sucursalMask(this.state.sucursal)}
                     disabled={true}
                   />
                   <Button
                     onClick={() => {
+                      this.props.dispatch(setCurrentObject(this.state));
                       this.props.dispatch(push('/buscarSucursal'));
                     }}
                     raised
@@ -127,6 +153,18 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
               </Grid>
             </CardText>
           </Card>
+          <Button
+                    onClick={() => {
+                      this.props.dispatch(setCurrentObject(this.state));
+                      this.props.dispatch(push('/buscarProductos'));
+                    }}
+                    raised
+                    primary
+                    iconClassName="fa fa-search"
+                  >
+                    Buscar Productos
+                  </Button>
+                  {this.renderProductos(this.state.productos)}
         </div>
       </div>
     );
@@ -134,7 +172,10 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
 }
 
 function mapStateToProps(state: AppStore) {
-  return { errorMessage: state.auth.errorMessage };
+  return {
+    errorMessage: state.auth.errorMessage,
+    currentObj: state.form.currentObject
+  };
 }
 
 const mapDispatchToProps = dispatch => {
@@ -150,6 +191,7 @@ export default connect(
 
 interface PropsFromState {
   errorMessage: string;
+  currentObj: object;
 }
 
 interface PropsFromDispatch {

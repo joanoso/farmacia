@@ -28,11 +28,10 @@ class ErrorSistemaPage extends Component<any, any> {
                     </div>
                     <div>
                         <p>
-                            Si el inconveniente persiste, comunicate con el Centro de
-                            Información Telefónica al 0810-999-2347 o bien envianos una
+                            lalalalalalalala error
                             <a
                                 className="btn  btn-link btn-sm"
-                                href="http://www.afip.gob.ar/consultas/"
+                                href=""
                             >
                                 Consultas Web
                             </a>
