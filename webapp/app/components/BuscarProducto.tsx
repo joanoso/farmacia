@@ -9,14 +9,8 @@ import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText, DatePicker, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
-import {
-  DataTable,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn
-} from 'react-md';
-import MultiSelectionTable from "../components/common/MultiSelectionTable"
+import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import MultiSelectionTable from '../components/common/MultiSelectionTable';
 
 class BuscarProducto extends Component<BuscarProductoProps, any> {
   constructor(props) {
@@ -28,23 +22,22 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
   }
 
   onSearchProductos() {
-    const prods =  [{ id: 1, descripcion: "Caja Verde", marca: "Duradura" },
-    { id: 2, descripcion: "Caja Roja", marca: "Palo Santo" }]
-
-    this.setState({ ...this.state, productos: prods })
+    axios.get('/api/productos').then((res) => {
+      this.setState({ ...this.state, productos: res.data });
+    });
   }
 
   handleChange = (value, event) => {
     this.setState({ ...this.state, [event.target.name]: value });
   };
 
-  handleChangeComplex = name => value => {
+  handleChangeComplex = (name) => (value) => {
     this.setState({ ...this.state, [name]: value });
   };
 
   tableConfig = {
-    columnsToShow: ["id", "descripcion", "marca"],
-    titles: ["ID", "Descripción", "Marca"]
+    columnsToShow: ['id', 'descripcion', 'marca'],
+    titles: ['ID', 'Descripción', 'Marca']
   };
 
   render() {
@@ -96,8 +89,10 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
             </Cell>
           </Grid>
 
-          <MultiSelectionTable data={this.state.productos}
+          <MultiSelectionTable
+            data={this.state.productos}
             config={this.tableConfig}
+            backPath={'/crearRemito'}
           />
         </div>
       </div>
@@ -109,7 +104,7 @@ function mapStateToProps(state: AppStore) {
   return { errorMessage: state.auth.errorMessage };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     dispatch
   };

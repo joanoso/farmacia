@@ -102,7 +102,7 @@ module.exports = {
       index: './tmp/index.html',
     },
     proxy: {
-      '/api': {
+      '/api/**': {
         target: 'http://localhost:8080',
         secure: false
       },

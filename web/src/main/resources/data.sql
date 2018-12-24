@@ -1,5 +1,5 @@
 insert into student
-values(10001,'Ranga', 'E1234567');
+values(10001,'Ranga muere', 'E1234567');
 
 insert into student
 values(10002,'Ravi', 'A1234568');
@@ -23,3 +23,11 @@ INSERT INTO SUCURSAL (id, direccion, numero,nombre,localidad) VALUES (2,'Campich
 -- INSERT INTO Usuario (id,username, pas/sword) VALUES (1,'admin', '$2a$10$XURPShQNCsLjp1ESc2laoObo9QZDhxz73hJPaEv7/cBha4pk0AgP.');
 
 
+INSERT INTO TIPO_REMITO (ID, DESCRIPCION) VALUES (1,'SIMPLE');
+INSERT INTO TIPO_REMITO (ID, DESCRIPCION) VALUES (2,'COMPLEJO');
+
+INSERT INTO ESTADO_REMITO (ID, DESCRIPCION) VALUES (1,'BORRADOR');
+INSERT INTO ESTADO_REMITO (ID, DESCRIPCION) VALUES (2,'PENDIENTE');
+
+INSERT INTO PRODUCTO (ID, DESCRIPCION, MARCA) VALUES (1, 'Caja Verde', 'Duracel');
+INSERT INTO PRODUCTO (ID, DESCRIPCION, MARCA) VALUES (2, 'Caja Roja', 'Palo Santo');

@@ -59,14 +59,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+        .headers().frameOptions().disable().and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
             .authorizeRequests()
+            .antMatchers("/console/**").permitAll()
             .antMatchers("/auth/login").permitAll()
+            .antMatchers("/api/params/**").permitAll()
             .antMatchers("/auth/**").permitAll()
             .antMatchers("/index.html").permitAll()
             .antMatchers("/api/system").permitAll()
             .antMatchers("/api/students").permitAll()
+            .antMatchers("/api/productos").permitAll()
+            .antMatchers("/api/remito/**").permitAll()
             //.antMatchers("/api/sucursales/filtered").access("hasRole('ROLE_ADMIN')")
             .antMatchers("/api/sucursales/filtered").permitAll()
             .anyRequest().authenticated().and()

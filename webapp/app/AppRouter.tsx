@@ -15,6 +15,7 @@ import Feature from './Feature';
 import CrearRemito from './components/CrearRemito';
 import BuscarSucursal from './components/BuscarSucursal';
 import BuscarProducto from './components/BuscarProducto';
+import ConsultarRemito from './components/ConsultarRemito';
 
 export const createAppRouter = (store: Store<AppStore>, history: History) => {
   const app = (
@@ -29,6 +30,7 @@ export const createAppRouter = (store: Store<AppStore>, history: History) => {
           <Route path="/crearRemito" component={CrearRemito} />
           <Route path="/buscarSucursal" component={BuscarSucursal} />
           <Route path="/buscarProductos" component={BuscarProducto} />
+          <Route path="/consultarRemitos" component={ConsultarRemito} />
         </App>
       </ConnectedRouter>
     </Provider>

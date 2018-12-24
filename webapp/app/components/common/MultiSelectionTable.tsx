@@ -1,50 +1,38 @@
 import { Component } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { TextField, Button } from 'react-md';
+import { Button } from 'react-md';
 import { AppStore } from '../../AppStore';
 import { Grid, Cell } from 'react-md';
-import { Card, CardText, DatePicker, SelectField } from 'react-md';
+import { Card } from 'react-md';
 import { push } from 'connected-react-router';
-import {
-  DataTable,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn
-} from 'react-md';
+import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 
-class MultiSelectionTable extends Component<MultiSelectionTableProps, any> {
+class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelectionTableState> {
   constructor(props) {
     super(props);
-    this.state = { data: props.data }
+    this.state = { data: props.data, itemsSelected: [] };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps: MultiSelectionTableProps) {
     const currentData = this.props.data;
     if (currentData !== prevProps.data) {
-      this.setState({ data: currentData })
+      this.setState({ data: currentData });
     }
   }
 
-  toogle = (index, checked, ev) => {
-    const data = _.cloneDeep(this.state.data);
-
-    /*  _.forEach(data, item => {
-       item.selected = false;
-     }); */
+  toogle = (index: number, checked: boolean, ev) => {
+    const data = _.cloneDeep(this.state.data) as Data[];
     data[index - 1].selected = checked;
 
-    const itemsSelected = _.filter(data, (it) => {
+    const itemsSelected = _.filter(data, (it: Data) => {
       return it.selected;
-    })
+    });
 
     this.setState({
       data,
-      itemsSelected: itemsSelected
+      itemsSelected
     });
   };
 
@@ -52,29 +40,22 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, any> {
     if (this.props.data.length === 0) {
       return null;
     } else {
-
       return (
         <div className="fullWidth">
           <Card className="md-block-centered">
-            <DataTable
-              baseId="simple-selectable-table"
-              indeterminate>
+            <DataTable baseId="simple-selectable-table" indeterminate>
               <TableHeader>
                 <TableRow>
-                  {this.props.config.titles.map((title, i) => (
-                    <TableColumn>{title}</TableColumn>
+                  {this.props.config.titles.map((title: string, i: number) => (
+                    <TableColumn key={i}>{title}</TableColumn>
                   ))}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {this.state.data.map((item, i) => (
-                  <TableRow
-                    key={i}
-                    selected={item.selected}
-                    onCheckboxClick={this.toogle}
-                  >
-                    {this.props.config.columnsToShow.map((c, i) => (
-                      <TableColumn>{item[c]}</TableColumn>
+                {this.state.data.map((item: Data, i: number) => (
+                  <TableRow key={i} selected={item.selected} onCheckboxClick={this.toogle}>
+                    {this.props.config.columnsToShow.map((c: string, i: number) => (
+                      <TableColumn key={i}>{item[c]}</TableColumn>
                     ))}
                   </TableRow>
                 ))}
@@ -88,7 +69,9 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, any> {
                 <Button
                   onClick={() => {
                     this.props.dispatch(
-                      push('/crearRemito', { productos: this.state.itemsSelected })
+                      push(this.props.backPath, {
+                        productos: this.state.itemsSelected
+                      })
                     );
                   }}
                   raised
@@ -109,7 +92,7 @@ function mapStateToProps(state: AppStore) {
   return {};
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     dispatch
   };
@@ -120,17 +103,16 @@ export default connect(
   mapDispatchToProps
 )(MultiSelectionTable);
 
-interface PropsFromState {
-
-}
+interface PropsFromState {}
 
 interface PropsFromDispatch {
   dispatch: Function;
 }
 
 interface InjectedProps {
-  data: any[];
+  data: Data[];
   config: Config;
+  backPath: string;
 }
 
 interface Config {
@@ -139,3 +121,12 @@ interface Config {
 }
 
 type MultiSelectionTableProps = PropsFromState & PropsFromDispatch & InjectedProps;
+
+interface MultiSelectionTableState {
+  data: Data[];
+  itemsSelected: object[];
+}
+
+interface Data {
+  selected: boolean;
+}

@@ -1,0 +1,9 @@
+{
+    "printWidth": 100,
+    "singleQuote": true,
+    "arrowParens": "always",
+    "rules": {
+      "jsx-quotes": [2, "whatsoever"]
+    },
+    "semi":true
+  }

@@ -1,39 +1,31 @@
 import { Component } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { TextField, Button } from 'react-md';
+import { Button } from 'react-md';
 import { AppStore } from '../../AppStore';
 import { Grid, Cell } from 'react-md';
-import { Card, CardText, DatePicker, SelectField } from 'react-md';
+import { Card } from 'react-md';
 import { push } from 'connected-react-router';
-import {
-  DataTable,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn
-} from 'react-md';
+import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 
-class SimpleSelectionTable extends Component<SimpleSelectionTableProps, any> {
+class SimpleSelectionTable extends Component<SimpleSelectionTableProps, SimpleSelectionTableState> {
   constructor(props) {
     super(props);
-    this.state = { data: props.data }
+    this.state = { data: props.data, itemSelected: undefined };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps: SimpleSelectionTableProps) {
     const currentData = this.props.data;
     if (currentData !== prevProps.data) {
-      this.setState({ data: currentData })
+      this.setState({ data: currentData });
     }
   }
 
-  toogle = (index, checked, ev) => {
+  toogle = (index: number, checked: boolean, ev) => {
     const data = _.cloneDeep(this.state.data);
 
-    _.forEach(data, item => {
+    _.forEach(data, (item) => {
       item.selected = false;
     });
 
@@ -48,13 +40,10 @@ class SimpleSelectionTable extends Component<SimpleSelectionTableProps, any> {
     if (this.props.data.length === 0) {
       return null;
     } else {
-
       return (
         <div className="fullWidth">
           <Card className="md-block-centered">
-            <DataTable
-              baseId="simple-selectable-table"
-              indeterminate>
+            <DataTable baseId="simple-selectable-table" indeterminate>
               <TableHeader>
                 <TableRow>
                   {this.props.config.titles.map((title, i) => (
@@ -63,13 +52,9 @@ class SimpleSelectionTable extends Component<SimpleSelectionTableProps, any> {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {this.state.data.map((item, i) => (
-                  <TableRow
-                    key={i}
-                    selected={item.selected}
-                    onCheckboxClick={this.toogle}
-                  >
-                    {this.props.config.columnsToShow.map((c, i) => (
+                {this.state.data.map((item, i: number) => (
+                  <TableRow key={i} selected={item.selected} onCheckboxClick={this.toogle}>
+                    {this.props.config.columnsToShow.map((c: string, i: number) => (
                       <TableColumn>{item[c]}</TableColumn>
                     ))}
                   </TableRow>
@@ -84,7 +69,9 @@ class SimpleSelectionTable extends Component<SimpleSelectionTableProps, any> {
                 <Button
                   onClick={() => {
                     this.props.dispatch(
-                      push('/crearRemito', this.state.itemSelected)
+                      push(this.props.backPath, {
+                        itemSelected: this.state.itemSelected
+                      })
                     );
                   }}
                   raised
@@ -106,7 +93,7 @@ function mapStateToProps(state: AppStore) {
   return {};
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     dispatch
   };
@@ -117,17 +104,16 @@ export default connect(
   mapDispatchToProps
 )(SimpleSelectionTable);
 
-interface PropsFromState {
-
-}
+interface PropsFromState {}
 
 interface PropsFromDispatch {
   dispatch: Function;
 }
 
 interface InjectedProps {
-  data: any[];
+  data: Data[];
   config: Config;
+  backPath: string;
 }
 
 interface Config {
@@ -136,3 +122,12 @@ interface Config {
 }
 
 type SimpleSelectionTableProps = PropsFromState & PropsFromDispatch & InjectedProps;
+
+interface SimpleSelectionTableState {
+  data: Data[];
+  itemSelected: Data;
+}
+
+interface Data {
+  selected: boolean;
+}

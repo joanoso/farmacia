@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>students.web</artifactId>
+  <artifactId>farmacia.web</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -43,18 +43,23 @@
     <!--</dependency>-->
     <dependency>
       <groupId>com.infoTech</groupId>
-      <artifactId>students.webapp</artifactId>
+      <artifactId>farmacia.webapp</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.infoTech</groupId>
-      <artifactId>students.business</artifactId>
+      <artifactId>farmacia.business</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>2.9.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.9.8</version>
     </dependency>
   </dependencies>
   <build>
@@ -68,6 +73,8 @@
           <!--</descriptorRefs>-->
         <!--</configuration>-->
       <!--</plugin>-->
+
+
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>appengine-maven-plugin</artifactId>

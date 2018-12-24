@@ -1,16 +1,20 @@
 package com.tmp;
 
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
+import javax.servlet.annotation.WebServlet;
+
 @Configuration
-@EnableWebMvc
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {"classpath:/public/"};
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
         if (!registry.hasMappingForPattern("/webjars/**")) {
             registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         }
@@ -18,6 +22,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
             registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
         }
     }
+
+//    @Bean
+//    ServletRegistrationBean h2servletRegistration(){
+//        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
+//        registrationBean.addUrlMappings("/console/*");
+//        return registrationBean;
+//    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

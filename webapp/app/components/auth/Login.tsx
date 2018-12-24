@@ -7,7 +7,6 @@ import { AppStore } from '../../AppStore';
 import { CommonComponentProps } from '../../common/interface/CommonComponentProps';
 import { TextField, Button } from 'react-md';
 import { login, cleanError } from '../../actions/AuthActions';
-import {Student} from "../../../appOld/common/model/Student";
 
 class Login extends Component<LoginProps, LoginState> {
     constructor(props) {

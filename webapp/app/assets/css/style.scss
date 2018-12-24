@@ -88,6 +88,10 @@ ul li {
 
 .page-content {
   padding: 10px;
+
+  .md-paper {
+    margin-bottom: 10px;
+  }
 }
 
 .md-picker-container .md-text-field-container {
@@ -124,4 +128,31 @@ ul li {
   *:last-of-type {
     margin-right: 0;
   }
+}
+
+.custom-table-input {
+  width: 40px;
+
+  input {
+    text-align: center;
+  }
+}
+
+.sucursal-field {
+  div {
+    padding-left: 12px;
+    width: 90%;
+    display: inline-block;
+  }
+  button {
+    width: 10%;
+  }
+}
+
+.md-icon {
+  font-size: 20px;
+}
+
+.md-table-column--plain {
+  font-size: 13px;
 }

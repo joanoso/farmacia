@@ -66,17 +66,30 @@ create table STOCK_SUCURSAL (
 
 create table REMITO (
    id NUMBER not null,
-   estado_id NUMBER not null,
-   sucursal_destino_id NUMBER not null,
+   estado NUMBER not null,
+   tipo NUMBER not null,
+   sucursal_destino NUMBER not null,
    primary key(id)
 );
 
 create table DETALLE_REMITO (
-   idRemito NUMBER not null,
-   idProducto NUMBER not null,
+   id NUMBER,
+   remito NUMBER not null,
+   producto NUMBER not null,
    cantidad NUMBER not null,
-   primary key(idRemito,idProducto)
+   primary key(id)
 );
 
+CREATE TABLE TIPO_REMITO (
+  ID NUMBER,
+  DESCRIPCION varchar(255) not null,
+  primary key(ID)
+);
+
+CREATE TABLE ESTADO_REMITO (
+  ID NUMBER,
+  DESCRIPCION varchar(255) not null,
+  primary key(ID)
+);
 
 

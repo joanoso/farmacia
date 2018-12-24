@@ -1,22 +1,14 @@
 import { Component } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { TextField, Button } from 'react-md';
 import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
-import { Card, CardText, DatePicker, SelectField } from 'react-md';
+import { Card, CardText } from 'react-md';
 import { push } from 'connected-react-router';
-import {
-  DataTable,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn
-} from 'react-md';
-import SimpleSelectionTable from "../components/common/SimpleSelectionTable"
+import SimpleSelectionTable from '../components/common/SimpleSelectionTable';
 
 class BuscarSucursal extends Component<BuscarSucursalProps, any> {
   constructor(props) {
@@ -28,13 +20,15 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
   }
 
   onSearchSucursales() {
-    axios.post("/api/sucursales/filtered", {
-      nombre: this.state.nombre,
-      localidad: this.state.localidad,
-      numero: this.state.numero
-    }).then(res => {
-      this.setState({ ...this.state, sucursales: res.data })
-    })
+    axios
+      .post('/api/sucursales/filtered', {
+        nombre: this.state.nombre,
+        localidad: this.state.localidad,
+        numero: this.state.numero
+      })
+      .then(res => {
+        this.setState({ ...this.state, sucursales: res.data });
+      });
   }
 
   handleChange = (value, event) => {
@@ -112,12 +106,12 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
               <div className="buttons-right">
                 <Button
                   onClick={() => {
-                    this.props.dispatch(push('/buscarSucursal'));
+                    this.props.dispatch(push('/crearRemito'));
                   }}
                   raised
                   default
                 >
-                  Cancelar
+                  Volver
                 </Button>
                 <Button
                   onClick={() => {
@@ -136,6 +130,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
           <SimpleSelectionTable
             data={this.state.sucursales}
             config={this.tableConfig}
+            backPath={'/crearRemito'}
           />
         </div>
       </div>
