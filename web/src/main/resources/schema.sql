@@ -74,10 +74,10 @@ create table REMITO (
 
 create table DETALLE_REMITO (
    id NUMBER,
-   remito NUMBER not null,
-   producto NUMBER not null,
+   producto_id NUMBER NOT NULL,
    cantidad NUMBER not null,
-   primary key(id)
+   primary key(id),
+   CONSTRAINT detalle_producto FOREIGN KEY (producto_id) REFERENCES PRODUCTO (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE TIPO_REMITO (

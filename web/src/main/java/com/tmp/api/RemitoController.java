@@ -1,10 +1,7 @@
 package com.tmp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmp.domain.DetalleRemito;
-import com.tmp.domain.DetalleRemitoDao;
-import com.tmp.domain.Remito;
-import com.tmp.domain.RemitoDao;
+import com.tmp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +21,9 @@ public class RemitoController {
     @Autowired
     DetalleRemitoDao detalleRemitoDao;
 
+    @Autowired
+    ProductoDao productoDao;
+
     @RequestMapping(method = RequestMethod.GET, produces = {"application/json"})
     public List<Remito> getAllRemitos() {
         return (List<Remito>) remitoDao.findAll();
@@ -39,7 +39,10 @@ public class RemitoController {
         productos.stream().forEach(prod -> {
             DetalleRemito detalleRemito = new DetalleRemito();
             detalleRemito.setCantidad(Long.valueOf(prod.get("cantidad").toString()));
-            detalleRemito.setProducto(Long.valueOf(prod.get("id").toString()));
+
+            Producto producto = productoDao.findById(Long.valueOf(prod.get("id").toString())).get();
+
+            detalleRemito.setProducto(producto);
             remito.getDetallesRemito().add(detalleRemito);
         });
 

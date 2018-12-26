@@ -43,12 +43,22 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
 
       if (dotProp.get(props, 'history.location.state.element', undefined) !== undefined) {
         const { estado, id, sucursalDestino, tipo, detallesRemito } = element;
+
+        const prods = _.map(detallesRemito, (dr) => {
+          return {
+            cantidad: dr.cantidad,
+            id: dr.producto.id,
+            marca: dr.producto.marca,
+            descripcion: dr.producto.descripcion
+          };
+        });
+
         this.state = {
           estado: estado.toString(),
           nroRemito: id,
           sucursal: sucursalDestino,
           tipoRemito: tipo.toString(),
-          productos: detallesRemito,
+          productos: prods,
           visible: false
         };
       } else {

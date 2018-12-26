@@ -12,11 +12,9 @@ public class DetalleRemito implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "remito")
-    private long remito;
-
-    @Column(name = "producto")
-    private Long producto;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="producto_id")
+    private Producto producto;
 
     @Column(name = "cantidad")
     private Long cantidad;
@@ -29,19 +27,11 @@ public class DetalleRemito implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public long getRemito() {
-        return remito;
-    }
-
-    public void setRemito(long remito) {
-        this.remito = remito;
-    }
-
-    public Long getProducto() {
+    public Producto getProducto() {
         return producto;
     }
 
-    public void setProducto(Long producto) {
+    public void setProducto(Producto producto) {
         this.producto = producto;
     }
 
