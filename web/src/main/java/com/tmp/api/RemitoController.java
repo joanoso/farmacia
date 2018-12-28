@@ -3,10 +3,8 @@ package com.tmp.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tmp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +47,19 @@ public class RemitoController {
         Remito remitoSaved = remitoDao.save(remito);
         return remitoSaved.getId();
     }
+
+    @RequestMapping(value = "/eliminarRemito", method = RequestMethod.POST, produces = {"application/json"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void eliminarRemito(@RequestBody Map<String, Object> params) {
+
+        Remito rm = remitoDao.findById(Long.valueOf(params.get("id").toString())).get();
+        if (rm.getEstado() != 1 && rm.getEstado() != 2) {
+            throw new RuntimeException("El Remito debe poseer estado Borrador o Pendiente para ser eliminado.");
+        }
+
+        remitoDao.delete(rm);
+    }
+
 
 //    @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
 //    public List<Remito> getRemitos(@RequestBody Map<String, Object> params) {

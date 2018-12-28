@@ -41,9 +41,17 @@ class Table extends Component<TableProps, TableState> {
                     <TableColumn key={i}>{item[c]}</TableColumn>
                   ))}
                   <TableColumn>
-                    <Button icon primary>
-                      delete
-                    </Button>
+                    {this.props.canDeleteElement(item) && (
+                      <Button
+                        icon
+                        primary
+                        onClick={() => {
+                          this.props.onDeleteRemito(item);
+                        }}
+                      >
+                        delete
+                      </Button>
+                    )}
                     <Button icon primary onClick={() => this.props.onEdit(item)}>
                       edit
                     </Button>
@@ -86,6 +94,8 @@ interface InjectedProps {
   data: any[];
   config: Config;
   onEdit: Function;
+  canDeleteElement?: Function;
+  onDeleteRemito: Function;
 }
 
 interface Config {
