@@ -18,6 +18,9 @@ public class Producto implements Serializable {
     @Column(name = "marca")
     private String marca;
 
+    @Column(name = "monodroga")
+    private String monodroga;
+
     public long getId() {
         return id;
     }
@@ -42,4 +45,11 @@ public class Producto implements Serializable {
         this.marca = marca;
     }
 
+    public String getMonodroga() {
+        return monodroga;
+    }
+
+    public void setMonodroga(String monodroga) {
+        this.monodroga = monodroga;
+    }
 }

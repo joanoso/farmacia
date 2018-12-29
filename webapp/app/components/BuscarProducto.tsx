@@ -2,14 +2,12 @@ import { Component } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { TextField, Button } from 'react-md';
 import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
-import { Card, CardText, DatePicker, SelectField } from 'react-md';
+import { Card, CardText, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
-import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
 import MultiSelectionTable from '../components/common/MultiSelectionTable';
 
 class BuscarProducto extends Component<BuscarProductoProps, any> {
@@ -22,7 +20,7 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
   }
 
   onSearchProductos() {
-    axios.get('/api/productos').then((res) => {
+    axios.get(`/api/productos/${this.state.searchValue}/${this.state.descripcion}`).then((res) => {
       this.setState({ ...this.state, productos: res.data });
     });
   }
@@ -40,6 +38,12 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
     titles: ['ID', 'Descripción', 'Marca']
   };
 
+  searchValues = [
+    { value: 'descripcion', label: 'Descripcion' },
+    { value: 'marca', label: 'Marca' },
+    { value: 'monodroga', label: 'Monodroga' }
+  ];
+
   render() {
     return (
       <div className="fullWidth">
@@ -49,7 +53,18 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
           <Card className="md-block-centered">
             <CardText>
               <Grid className="grid-example">
-                <Cell phoneSize={4} tabletSize={8} desktopSize={12}>
+                <Cell phoneSize={4} tabletSize={2} desktopSize={4}>
+                  <SelectField
+                    name="searchValue"
+                    id="searchValue"
+                    label="Campo de Busqueda"
+                    className="md-cell"
+                    value={this.state.searchValue}
+                    menuItems={this.searchValues}
+                    onChange={this.handleChangeComplex('searchValue')}
+                  />
+                </Cell>
+                <Cell phoneSize={4} tabletSize={6} desktopSize={8}>
                   <TextField
                     name="descripcion"
                     id="descripcion"
