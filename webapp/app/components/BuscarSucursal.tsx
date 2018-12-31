@@ -101,8 +101,6 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
             </CardText>
           </Card>
 
-          <Grid>
-            <Cell size={12}>
               <div className="buttons-right">
                 <Button
                   onClick={() => {
@@ -124,8 +122,6 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
                   Buscar
                 </Button>
               </div>
-            </Cell>
-          </Grid>
 
           <SimpleSelectionTable
             data={this.state.sucursales}

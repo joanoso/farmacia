@@ -239,7 +239,9 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
                 <Button
                   onClick={() => {
                     this.props.dispatch(setCurrentObject(this.state));
-                    this.props.dispatch(push('/buscarProductos'));
+                    this.props.dispatch(
+                      push('/buscarProductos', { productsAlreadyAdded: this.state.productos })
+                    );
                   }}
                   raised
                   primary

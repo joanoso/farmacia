@@ -62,26 +62,21 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelec
               </TableBody>
             </DataTable>
           </Card>
-
-          <Grid>
-            <Cell size={12}>
-              <div className="buttons-right">
-                <Button
-                  onClick={() => {
-                    this.props.dispatch(
-                      push(this.props.backPath, {
-                        productos: this.state.itemsSelected
-                      })
-                    );
-                  }}
-                  raised
-                  primary
-                >
-                  Seleccionar
-                </Button>
-              </div>
-            </Cell>
-          </Grid>
+          <div className="buttons-right">
+            <Button
+              onClick={() => {
+                this.props.dispatch(
+                  push(this.props.backPath, {
+                    productos: this.state.itemsSelected
+                  })
+                );
+              }}
+              raised
+              primary
+            >
+              Seleccionar
+            </Button>
+          </div>
         </div>
       );
     }

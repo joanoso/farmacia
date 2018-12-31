@@ -29,7 +29,7 @@ public class CustomSucursalRepositoryImpl implements CustomSucursalRepository {
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (!StringUtils.isEmpty(params.get("numero"))) {
-            predicates.add(cb.equal(root.get("numero"), 5));
+            predicates.add(cb.equal(root.get("numero"), params.get("numero")));
         }
 
         if (!StringUtils.isEmpty(params.get("localidad"))) {

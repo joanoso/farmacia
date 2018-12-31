@@ -27,6 +27,11 @@ public class RemitoController {
         return (List<Remito>) remitoDao.findAll();
     }
 
+    @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
+    public List<Remito> getRemitosFiltered(@RequestBody Map<String, Object> params) {
+        return remitoDao.getRemitosCustom(params);
+    }
+
     @RequestMapping(value = "/agregarRemito", method = RequestMethod.POST, produces = {"application/json"})
     public Long agregarRemito(@RequestBody Map<String, Object> params) {
 

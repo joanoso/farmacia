@@ -31,14 +31,13 @@ public class ProductoController {
                 return productoDao.findByDescripcionLike(valor.toUpperCase());
 
             case "marca":
-                return productoDao.findByMarcaLike(valor);
+                return productoDao.findByMarcaLike(valor.toUpperCase());
 
             case "monodroga":
-                return productoDao.findByMonodrogaLike(valor);
+                return productoDao.findByMonodrogaLike(valor.toUpperCase());
 
             default:
-                throw new RuntimeException("Parametros de busqueda incorrectos");
-
+                return (List<Producto>) productoDao.findAll();
 
         }
 

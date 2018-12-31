@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import * as dotProp from 'dot-prop-immutable';
 import { TextField, Button } from 'react-md';
 import { AppStore } from '../AppStore';
 import { Grid, Cell } from 'react-md';
@@ -13,15 +14,25 @@ import MultiSelectionTable from '../components/common/MultiSelectionTable';
 class BuscarProducto extends Component<BuscarProductoProps, any> {
   constructor(props) {
     super(props);
+    const productsToSkip = dotProp.get(props, 'history.location.state.productsAlreadyAdded', []);
     this.state = {
       productos: [],
+      productsToSkip,
       productosSelected: undefined
     };
   }
 
   onSearchProductos() {
     axios.get(`/api/productos/${this.state.searchValue}/${this.state.descripcion}`).then((res) => {
-      this.setState({ ...this.state, productos: res.data });
+      const prods = _.filter(res.data, (producto) => {
+        return (
+          _.find(this.state.productsToSkip, (el) => {
+            return el.id === producto.id;
+          }) === undefined
+        );
+      });
+
+      this.setState({ ...this.state, productos: prods });
     });
   }
 
@@ -78,31 +89,27 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
             </CardText>
           </Card>
 
-          <Grid>
-            <Cell size={12}>
-              <div className="buttons-right">
-                <Button
-                  onClick={() => {
-                    this.props.dispatch(push('/crearRemito'));
-                  }}
-                  raised
-                  default
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  onClick={() => {
-                    this.onSearchProductos();
-                  }}
-                  raised
-                  primary
-                  iconClassName="fa fa-search"
-                >
-                  Buscar
-                </Button>
-              </div>
-            </Cell>
-          </Grid>
+          <div className="buttons-right">
+            <Button
+              onClick={() => {
+                this.props.dispatch(push('/crearRemito'));
+              }}
+              raised
+              default
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                this.onSearchProductos();
+              }}
+              raised
+              primary
+              iconClassName="fa fa-search"
+            >
+              Buscar
+            </Button>
+          </div>
 
           <MultiSelectionTable
             data={this.state.productos}

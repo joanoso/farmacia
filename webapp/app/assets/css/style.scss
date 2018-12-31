@@ -122,6 +122,7 @@ ul li {
 
 .buttons-right {
   text-align: right;
+  padding-bottom: 20px;
   /*   display: flex;
   justify-content: space-around; */
 
@@ -159,4 +160,9 @@ ul li {
 
 .md-table-column--plain {
   font-size: 13px;
+}
+
+
+.md-menu--select-field.md-cell{
+  left: -8px;
 }
