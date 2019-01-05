@@ -2,12 +2,12 @@ import { Component } from 'react';
 import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { TextField, Button } from 'react-md';
-import { AppStore } from '../../AppStore';
+import { Button } from 'react-md';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import { Dispatch } from 'redux';
 
 class Table extends Component<TableProps, TableState> {
-  constructor(props) {
+  constructor(props: TableProps) {
     super(props);
     this.state = { data: props.data };
   }
@@ -28,7 +28,7 @@ class Table extends Component<TableProps, TableState> {
           <DataTable plain>
             <TableHeader>
               <TableRow>
-                {this.props.config.titles.map((title: string, i: number) => (
+                {this.props.config.titles.map((title, i) => (
                   <TableColumn key={i}>{title}</TableColumn>
                 ))}
                 <TableColumn>Acciones</TableColumn>
@@ -46,7 +46,7 @@ class Table extends Component<TableProps, TableState> {
                         icon
                         primary
                         onClick={() => {
-                          this.props.onDeleteRemito(item);
+                          this.props.onDeleteItem(item);
                         }}
                       >
                         delete
@@ -69,33 +69,27 @@ class Table extends Component<TableProps, TableState> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
-  return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
-  mapStateToProps,
+export default connect<{}, DispatchProps, OwnProps>(
+  null,
   mapDispatchToProps
 )(Table);
 
-interface PropsFromState {}
-
-interface PropsFromDispatch {
-  dispatch: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
 }
 
-interface InjectedProps {
-  data: any[];
+interface OwnProps {
+  data: object[];
   config: Config;
   onEdit: Function;
   canDeleteElement?: Function;
-  onDeleteRemito: Function;
+  onDeleteItem: Function;
 }
 
 interface Config {
@@ -103,8 +97,8 @@ interface Config {
   titles: string[];
 }
 
-type TableProps = PropsFromState & PropsFromDispatch & InjectedProps;
+type TableProps = DispatchProps & OwnProps;
 
 interface TableState {
-  data: any[];
+  data: object[];
 }

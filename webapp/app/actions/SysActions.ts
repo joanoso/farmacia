@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { START_FETCHING, END_FETCHING, CHANGE_MENU } from './types';
 
 export const startFetching = () => ({ type: START_FETCHING, fetching: true });

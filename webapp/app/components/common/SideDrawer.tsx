@@ -9,9 +9,11 @@ import { User } from '../../common/model/User';
 import { Button, Drawer, Toolbar } from 'react-md';
 import { changeMenu } from '../../actions/SysActions';
 import { setCurrentObject } from '../../reducers/form';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action, Dispatch } from 'redux';
 
-class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
-  constructor(props) {
+class SideDrawer extends Component<StateProps & DispatchProps, {}> {
+  constructor(props: StateProps & DispatchProps) {
     super(props);
   }
 
@@ -99,31 +101,31 @@ class SideDrawer extends Component<IStoreStateProps & IDispatchProps, {}> {
   }
 }
 
-interface IDispatchProps {
+interface DispatchProps {
   changeMenu: () => void;
-  dispatch: Function;
+  dispatch: Dispatch;
 }
 
-interface IStoreStateProps {
+interface StateProps {
   menuOpen: boolean;
   user: User;
 }
 
-function mapStateToProps(state: AppStore): IStoreStateProps {
+function mapStateToProps(state: AppStore): StateProps {
   return {
     menuOpen: state.sys.menuOpen,
     user: state.auth.user
   };
 }
 
-function mapDispatchToProps(dispatch): IDispatchProps {
+function mapDispatchToProps(dispatch: ThunkDispatch<AppStore, void, Action>): DispatchProps {
   return {
     changeMenu: () => dispatch(changeMenu),
     dispatch
   };
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(SideDrawer);

@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 @import 'variables';
+@import 'forms';
 @import 'header';
 @import 'login';
 @import 'landing';
@@ -33,7 +34,6 @@ html,
 }
 
 .main-container {
-  //padding: 10px;
   display: flex;
   flex-grow: 1;
   background-image: url('../../assets/img/home_2.jpg');
@@ -66,8 +66,6 @@ ul li {
   margin-right: 0;
 }
 
-/* ############# end general styles ############# */
-
 .page-header {
   background-color: #1976d2;
   height: 50px;
@@ -94,75 +92,4 @@ ul li {
   }
 }
 
-.md-text-field-container {
-  top: 3px;
-}
-
-.md-picker-container .md-text-field-container {
-  top: -6px;
-}
-
-.md-menu--select-field .md-select-field__toggle {
-  top: -6px;
-}
-
-.md-picker-container,
-.md-menu--select-field {
-  width: 100%;
-}
-
-.md-table-header
-  .md-table-row
-  .md-table-checkbox
-  .md-selection-control-container
-  .md-selection-control-label
-  .md-selection-control-toggle {
-  display: none;
-}
-
-.buttons-right {
-  text-align: right;
-  padding-bottom: 20px;
-  /*   display: flex;
-  justify-content: space-around; */
-
-  * {
-    margin-right: 10px;
-  }
-
-  *:last-of-type {
-    margin-right: 0;
-  }
-}
-
-.custom-table-input {
-  width: 40px;
-
-  input {
-    text-align: center;
-  }
-}
-
-.sucursal-field {
-  div {
-    padding-left: 12px;
-    width: 90%;
-    display: inline-block;
-  }
-  button {
-    width: 10%;
-  }
-}
-
-.md-icon {
-  font-size: 20px;
-}
-
-.md-table-column--plain {
-  font-size: 13px;
-}
-
-
-.md-menu--select-field.md-cell{
-  left: -8px;
-}
+/* ############# end general styles ############# */

@@ -3,22 +3,22 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-md';
-import { AppStore } from '../../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card } from 'react-md';
 import { push } from 'connected-react-router';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import { Dispatch } from 'redux';
 
 class SimpleSelectionTable extends Component<SimpleSelectionTableProps, SimpleSelectionTableState> {
-  constructor(props) {
+  constructor(props: SimpleSelectionTableProps) {
     super(props);
-    this.state = { data: props.data, itemSelected: undefined };
+    this.state = { data: props.data as Data[], itemSelected: undefined };
   }
 
   componentDidUpdate(prevProps: SimpleSelectionTableProps) {
     const currentData = this.props.data;
     if (currentData !== prevProps.data) {
-      this.setState({ data: currentData });
+      this.setState({ data: currentData as Data[] });
     }
   }
 
@@ -89,29 +89,23 @@ class SimpleSelectionTable extends Component<SimpleSelectionTableProps, SimpleSe
   }
 }
 
-function mapStateToProps(state: AppStore) {
-  return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
-  mapStateToProps,
+export default connect<{}, DispatchProps, OwnProps>(
+  null,
   mapDispatchToProps
 )(SimpleSelectionTable);
 
-interface PropsFromState {}
-
-interface PropsFromDispatch {
-  dispatch: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
 }
 
-interface InjectedProps {
-  data: Data[];
+interface OwnProps {
+  data: object[];
   config: Config;
   backPath: string;
 }
@@ -121,7 +115,7 @@ interface Config {
   titles: string[];
 }
 
-type SimpleSelectionTableProps = PropsFromState & PropsFromDispatch & InjectedProps;
+type SimpleSelectionTableProps = DispatchProps & OwnProps;
 
 interface SimpleSelectionTableState {
   data: Data[];

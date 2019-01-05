@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { TextField, Button } from 'react-md';
 import { AppStore } from '../../AppStore';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import { Dispatch } from 'redux';
 
-class TableList extends Component<TableListProps, TableListState> {
-  constructor(props) {
+class ProductosDeRemitoTable extends Component<ProductosProps, ProductosState> {
+  constructor(props: ProductosProps) {
     super(props);
     this.state = { data: props.data };
   }
 
-  componentDidUpdate(prevProps: TableListProps) {
+  componentDidUpdate(prevProps: ProductosProps) {
     const currentData = this.props.data;
     if (currentData !== prevProps.data) {
       this.setState({ data: currentData });
@@ -28,7 +29,7 @@ class TableList extends Component<TableListProps, TableListState> {
           <DataTable plain>
             <TableHeader>
               <TableRow>
-                {this.props.config.titles.map((title: string, i: number) => (
+                {this.props.config.titles.map((title, i) => (
                   <TableColumn key={i}>{title}</TableColumn>
                 ))}
                 <TableColumn>Cantidad</TableColumn>
@@ -65,31 +66,25 @@ class TableList extends Component<TableListProps, TableListState> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
-  return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
-  mapStateToProps,
+export default connect<{}, DispatchProps, OwnProps>(
+  null,
   mapDispatchToProps
-)(TableList);
+)(ProductosDeRemitoTable);
 
-interface PropsFromState {}
-
-interface PropsFromDispatch {
+interface DispatchProps {
   dispatch: Function;
 }
 
-interface InjectedProps {
-  data: any[];
+interface OwnProps {
+  data: object[];
   config: Config;
-  changeCantidad: (item: any) => (value: number, ev) => void;
+  changeCantidad: (item: object) => (value: number, ev) => void;
 }
 
 interface Config {
@@ -97,8 +92,8 @@ interface Config {
   titles: string[];
 }
 
-type TableListProps = PropsFromState & PropsFromDispatch & InjectedProps;
+type ProductosProps = DispatchProps & OwnProps;
 
-interface TableListState {
-  data: any[];
+interface ProductosState {
+  data: object[];
 }

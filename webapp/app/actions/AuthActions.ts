@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosPromise } from 'axios';
 import {
     AUTH_USER,
     AUTH_ERROR,
@@ -12,13 +12,14 @@ import { Dispatch } from 'redux';
 import { AuthAction } from '../reducers/auth';
 import { SysAction } from '../reducers/sys';
 import { SignUpInfo } from '../common/model/SignUpInfo';
+import { User } from '../common/model/User';
 
 export const signup = (signupInfo: SignUpInfo, callback: Function) => async (
     dispatch: Dispatch<AuthAction | SysAction>
 ) => {
     try {
         dispatch({ type: START_FETCHING });
-        const response = await axios.post('/api/signup', signupInfo);
+        const response = await axios.post('/api/signup', signupInfo) as AxiosResponse<AuthResponse>;
         dispatch({ type: END_FETCHING, payload: '' });
         dispatch({ type: AUTH_USER, user: response.data.user });
         localStorage.setItem('token', response.data.token);
@@ -35,7 +36,7 @@ export const login = (
 ) => async (dispatch: Dispatch<AuthAction | SysAction>) => {
     try {
         dispatch({ type: START_FETCHING });
-        const response = await axios.post('/auth/login', loginInfo);
+        const response = await axios.post('/auth/login', loginInfo) as AxiosResponse<LoginResponse>;
         dispatch({ type: END_FETCHING, payload: '' });
         dispatch({ type: AUTH_USER, user: response.data.user });
         localStorage.setItem('token', response.data.access_token);
@@ -80,7 +81,7 @@ export const loadUserFromToken = () => async (
     });
 };
 
-export function meFromTokenRequest(tokenFromStorage) {
+export function meFromTokenRequest(tokenFromStorage: string): AxiosPromise<AuthResponse> {
     // check if the token is still valid, if so, get me from the server
 
     const request = axios({
@@ -116,4 +117,14 @@ export function meFromTokenFailure(error): AuthAction {
 
 export function cleanError(): AuthAction {
     return { type: AUTH_ERROR, errorMessage: '' };
+}
+
+interface LoginResponse {
+    user: User;
+    access_token: string;
+}
+
+interface AuthResponse {
+    user: User;
+    token: string;
 }

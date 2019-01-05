@@ -9,13 +9,18 @@ import { Grid, Cell } from 'react-md';
 import { Card, CardText } from 'react-md';
 import { push } from 'connected-react-router';
 import SimpleSelectionTable from '../components/common/SimpleSelectionTable';
+import { Dispatch } from 'redux';
+import Sucursal from '../common/model/Sucursal';
 
-class BuscarSucursal extends Component<BuscarSucursalProps, any> {
+class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState> {
   constructor(props) {
     super(props);
     this.state = {
       sucursales: [],
-      sucursalSelected: undefined
+      sucursalSelected: undefined,
+      numero: undefined,
+      nombre: '',
+      localidad: ''
     };
   }
 
@@ -26,7 +31,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
         localidad: this.state.localidad,
         numero: this.state.numero
       })
-      .then(res => {
+      .then((res) => {
         this.setState({ ...this.state, sucursales: res.data });
       });
   }
@@ -35,14 +40,14 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
     this.setState({ ...this.state, [event.target.name]: value });
   };
 
-  handleChangeComplex = name => value => {
+  handleChangeComplex = (name) => (value) => {
     this.setState({ ...this.state, [name]: value });
   };
 
-  toogle = (index, checked, ev) => {
+  toogle = (index: number, checked: boolean, ev) => {
     const sucursales = _.cloneDeep(this.state.sucursales);
 
-    _.forEach(sucursales, suc => {
+    _.forEach(sucursales, (suc) => {
       suc.selected = false;
     });
 
@@ -101,27 +106,27 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
             </CardText>
           </Card>
 
-              <div className="buttons-right">
-                <Button
-                  onClick={() => {
-                    this.props.dispatch(push('/crearRemito'));
-                  }}
-                  raised
-                  default
-                >
-                  Volver
-                </Button>
-                <Button
-                  onClick={() => {
-                    this.onSearchSucursales();
-                  }}
-                  raised
-                  primary
-                  iconClassName="fa fa-search"
-                >
-                  Buscar
-                </Button>
-              </div>
+          <div className="buttons-right">
+            <Button
+              onClick={() => {
+                this.props.dispatch(push('/crearRemito'));
+              }}
+              raised
+              default
+            >
+              Volver
+            </Button>
+            <Button
+              onClick={() => {
+                this.onSearchSucursales();
+              }}
+              raised
+              primary
+              iconClassName="fa fa-search"
+            >
+              Buscar
+            </Button>
+          </div>
 
           <SimpleSelectionTable
             data={this.state.sucursales}
@@ -134,28 +139,39 @@ class BuscarSucursal extends Component<BuscarSucursalProps, any> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
+function mapStateToProps(state: AppStore): StateProps {
   return { errorMessage: state.auth.errorMessage };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(BuscarSucursal);
 
-interface PropsFromState {
+interface StateProps {
   errorMessage: string;
 }
 
-interface PropsFromDispatch {
+interface DispatchProps {
   dispatch: Function;
-  login: Function;
 }
 
-type BuscarSucursalProps = PropsFromState & PropsFromDispatch;
+type BuscarSucursalProps = StateProps & DispatchProps;
+
+interface BuscarSucursalState {
+  sucursales: SucursalBase[];
+  sucursalSelected: Sucursal;
+  numero: number;
+  nombre: string;
+  localidad: string;
+}
+
+interface SucursalBase extends Sucursal {
+  selected: boolean;
+}

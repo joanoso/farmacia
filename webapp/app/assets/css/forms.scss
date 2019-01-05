@@ -1,0 +1,78 @@
+.md-text-field-container {
+  top: 3px;
+}
+
+.md-picker-container .md-text-field-container {
+  top: -6px;
+}
+
+.md-menu--select-field .md-select-field__toggle {
+  top: -6px;
+}
+
+.md-picker-container,
+.md-menu--select-field {
+  width: 100% !important;
+}
+
+.md-table-header
+  .md-table-row
+  .md-table-checkbox
+  .md-selection-control-container
+  .md-selection-control-label
+  .md-selection-control-toggle {
+  display: none;
+}
+
+.buttons-right {
+  text-align: right;
+  padding-bottom: 20px;
+  /*   display: flex;
+    justify-content: space-around; */
+
+  * {
+    margin-right: 10px;
+  }
+
+  *:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.custom-table-input {
+  width: 40px;
+
+  input {
+    text-align: center;
+  }
+}
+
+.sucursal-field {
+  div {
+    padding-left: 12px;
+    width: 90%;
+    display: inline-block;
+  }
+
+  .lupa-div{
+    width: 10%;
+  }
+
+  button{
+    top: 18px;
+    
+  }
+  
+}
+
+.md-icon {
+  font-size: 20px;
+}
+
+.md-table-column--plain {
+  font-size: 13px;
+}
+
+.md-menu--select-field.md-cell {
+  left: -8px;
+}

@@ -13,7 +13,7 @@ export interface AppStore {
   auth: Auth;
   sys: Sys;
   router: object;
-  form: Form
+  form: Form;
 }
 
 // Para poder acceder al store como un singleton.

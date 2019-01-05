@@ -2,9 +2,10 @@ import { Component } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { CommonComponentProps } from '../../common/interface/CommonComponentProps';
+import { AppStore } from '../../AppStore';
 
 export default (ChildComponent) => {
-  class ComposedComponent extends Component<requireAuthProps, any> {
+  class ComposedComponent extends Component<requireAuthProps, {}> {
     // Our component just got rendered
     componentDidMount() {
       this.shouldNavigateAway();
@@ -26,15 +27,15 @@ export default (ChildComponent) => {
     }
   }
 
-  function mapStateToProps(state) {
+  function mapStateToProps(state: AppStore): StateProps {
     return { auth: state.auth.authenticated };
   }
 
-  return connect(mapStateToProps)(ComposedComponent);
+  return connect<StateProps, {}, {}>(mapStateToProps)(ComposedComponent);
 };
 
-interface PropsFromState {
-  auth: boolean
+interface StateProps {
+  auth: boolean;
 }
 
-type requireAuthProps = PropsFromState & CommonComponentProps;
+type requireAuthProps = StateProps & CommonComponentProps;

@@ -11,22 +11,23 @@ import { Card, CardText, DatePicker, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
 import { setCurrentObject } from '../reducers/form';
 import { paramService } from '../service/ParamService';
-import TableList from './common/TableList';
+import ProductosDeRemitoTable from './common/ProductosDeRemitoTable';
+import { Dispatch } from 'redux';
 
-class CrearRemito extends Component<CrearRemitoProps, any> {
-  constructor(props) {
+class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
+  constructor(props: CrearRemitoProps) {
     super(props);
 
     // Chequeo si tengo currentObj
     if (props.currentObj) {
       const { estado, nroRemito, tipoRemito, sucursal, productos } = props.currentObj;
       const sucursalNew = dotProp.get(props, 'history.location.state.itemSelected.id', sucursal);
-      const productosNew = dotProp.get(props, 'history.location.state.productos', []);
+      const productosNew = dotProp.get(props, 'history.location.state.itemsSelected', []);
       _.forEach(productosNew, (p) => {
         p.cantidad = 0;
       });
 
-      const prods = _.union(productosNew, productos);
+      const prods = _.union(productosNew, productos) as ProductoBase[];
 
       this.state = {
         estado,
@@ -65,7 +66,7 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
         this.state = {
           estado: '1',
           nroRemito: '',
-          sucursal: '',
+          sucursal: undefined,
           tipoRemito: '',
           productos: [],
           visible: false
@@ -108,7 +109,11 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
       titles: ['ID', 'Descripción', 'Marca']
     };
     return (
-      <TableList data={prods} config={tableConfig} changeCantidad={this.handleProductChange} />
+      <ProductosDeRemitoTable
+        data={prods}
+        config={tableConfig}
+        changeCantidad={this.handleProductChange}
+      />
     );
   };
 
@@ -212,16 +217,18 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
                       value={this.sucursalMask(this.state.sucursal)}
                       disabled={true}
                     />
-                    <Button
-                      onClick={() => {
-                        this.props.dispatch(setCurrentObject(this.state));
-                        this.props.dispatch(push('/buscarSucursal'));
-                      }}
-                      icon
-                      primary
-                    >
-                      search
-                    </Button>
+                    <div className="lupa-div">
+                      <Button
+                        onClick={() => {
+                          this.props.dispatch(setCurrentObject(this.state));
+                          this.props.dispatch(push('/buscarSucursal'));
+                        }}
+                        icon
+                        primary
+                      >
+                        search
+                      </Button>
+                    </div>
                   </div>
                 </Cell>
               </Grid>
@@ -285,31 +292,45 @@ class CrearRemito extends Component<CrearRemitoProps, any> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
+function mapStateToProps(state: AppStore): StateProps {
   return {
     errorMessage: state.auth.errorMessage,
     currentObj: state.form.currentObject
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(CrearRemito);
 
-interface PropsFromState {
+interface StateProps {
   errorMessage: string;
-  currentObj: object;
+  currentObj: any;
 }
 
-interface PropsFromDispatch {
-  dispatch: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
 }
 
-type CrearRemitoProps = PropsFromState & PropsFromDispatch;
+type CrearRemitoProps = StateProps & DispatchProps;
+
+interface CrearRemitoState {
+  estado: string;
+  nroRemito: string;
+  tipoRemito: string;
+  sucursal: number;
+  productos: ProductoBase[];
+  visible: boolean;
+}
+
+interface ProductoBase {
+  id: number;
+  cantidad: number;
+}

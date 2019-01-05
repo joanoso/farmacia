@@ -6,34 +6,39 @@ import { connect } from 'react-redux';
 import * as dotProp from 'dot-prop-immutable';
 import { TextField, Button } from 'react-md';
 import { AppStore } from '../AppStore';
+import Producto from '../common/model/Producto';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText, SelectField } from 'react-md';
 import { push } from 'connected-react-router';
 import MultiSelectionTable from '../components/common/MultiSelectionTable';
+import { Dispatch } from 'redux';
 
-class BuscarProducto extends Component<BuscarProductoProps, any> {
-  constructor(props) {
+class BuscarProducto extends Component<BuscarProductoProps, BuscarProductoState> {
+  constructor(props: BuscarProductoProps) {
     super(props);
     const productsToSkip = dotProp.get(props, 'history.location.state.productsAlreadyAdded', []);
     this.state = {
       productos: [],
       productsToSkip,
-      productosSelected: undefined
+      descripcion: '',
+      searchValue: ''
     };
   }
 
   onSearchProductos() {
-    axios.get(`/api/productos/${this.state.searchValue}/${this.state.descripcion}`).then((res) => {
-      const prods = _.filter(res.data, (producto) => {
-        return (
-          _.find(this.state.productsToSkip, (el) => {
-            return el.id === producto.id;
-          }) === undefined
-        );
-      });
+    axios
+      .get(`/api/productos/${this.state.searchValue}/${this.state.descripcion}`)
+      .then((res: AxiosResponse<Producto[]>) => {
+        const prods = _.filter(res.data, (producto) => {
+          return (
+            _.find(this.state.productsToSkip, (el) => {
+              return el.id === producto.id;
+            }) === undefined
+          );
+        });
 
-      this.setState({ ...this.state, productos: prods });
-    });
+        this.setState({ ...this.state, productos: prods });
+      });
   }
 
   handleChange = (value, event) => {
@@ -122,28 +127,34 @@ class BuscarProducto extends Component<BuscarProductoProps, any> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
+function mapStateToProps(state: AppStore): StateProps {
   return { errorMessage: state.auth.errorMessage };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(BuscarProducto);
 
-interface PropsFromState {
+interface StateProps {
   errorMessage: string;
 }
 
-interface PropsFromDispatch {
+interface DispatchProps {
   dispatch: Function;
-  login: Function;
 }
 
-type BuscarProductoProps = PropsFromState & PropsFromDispatch;
+type BuscarProductoProps = StateProps & DispatchProps;
+
+interface BuscarProductoState {
+  productos: Producto[];
+  productsToSkip: Producto[];
+  descripcion: string;
+  searchValue: string;
+}

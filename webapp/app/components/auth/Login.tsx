@@ -1,134 +1,104 @@
 import { Component } from 'react';
-import axios, {AxiosResponse} from 'axios';
 import * as React from 'react';
-import { compose } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { AppStore } from '../../AppStore';
 import { CommonComponentProps } from '../../common/interface/CommonComponentProps';
 import { TextField, Button } from 'react-md';
 import { login, cleanError } from '../../actions/AuthActions';
 
-class Login extends Component<LoginProps, LoginState> {
-    constructor(props) {
-        super(props);
-        this.state = { username: '', password: '' };
-    }
+class Login extends Component<LoginProps, IState> {
+  constructor(props) {
+    super(props);
+    this.state = { username: '', password: '' };
+  }
 
-    componentWillUnmount() {
-        this.props.dispatch(cleanError());
-    }
+  componentWillUnmount() {
+    this.props.dispatch(cleanError());
+  }
 
-    onSubmit = () => {
-        this.props.login(this.state, () => {
-            this.props.history.push('/feature');
-        });
-    };
+  onSubmit = () => {
+    this.props.login(this.state, () => {
+      this.props.history.push('/feature');
+    });
+  };
 
-    handleChange = (value, event) => {
-        this.setState({ ...this.state, [event.target.name]: value });
-    };
+  handleChange = (value, event) => {
+    this.setState({ ...this.state, [event.target.name]: value });
+  };
 
-    onClickTraer = () => {
-
-      /*   axios.get('/api/students').then(
-            (resp: AxiosResponse<Student[]>) => {
-                this.setState({...this.state, students: resp.data});
-            }
-        ).catch((err) => {
-            console.log(err.response.data.error);
-        }); */
-
-    }
-
- /*    renderStudents() {
-        return this.state.students.map(
-            (student: Student) => {
-                return (
-                    <div key={student.id}>
-                        {student.id}
-                    </div>
-                );
-            }
-        );
-    } */
-
-    render() {
-        return (
-            <div className="login-wrapper">
-                {/*<button onClick={() => this.onClickTraer()}>Traer studentsa</button>*/}
-                {/*{this.renderStudents()}*/}
-                <div className="login-page">
-                    <div className="form">
-                        <TextField
-                            name="username"
-                            id="username"
-                            label="Username"
-                            lineDirection="center"
-                            onChange={this.handleChange}
-                        />
-                        <TextField
-                            name="password"
-                            id="password"
-                            label="Password"
-                            type="password"
-                            lineDirection="center"
-                            onChange={this.handleChange}
-                        />
-                        <br />
-                        <Button
-                            flat
-                            primary
-                            swapTheming
-                            className="login-button"
-                            onClick={() => this.onSubmit()}
-                        >
-                            login
-                        </Button>
-                        <div className="errorLogin">{this.props.errorMessage}</div>
-                        <p className="message">
-                            No está registrado?{' '}
-                            <a onClick={() => this.props.history.push('/signup')}>
-                                Registrarse
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="login-wrapper">
+        <div className="login-page">
+          <div className="form">
+            <TextField
+              name="username"
+              id="username"
+              label="Username"
+              lineDirection="center"
+              onChange={this.handleChange}
+            />
+            <TextField
+              name="password"
+              id="password"
+              label="Password"
+              type="password"
+              lineDirection="center"
+              onChange={this.handleChange}
+            />
+            <br />
+            <Button
+              flat
+              primary
+              swapTheming
+              className="login-button"
+              onClick={() => this.onSubmit()}
+            >
+              login
+            </Button>
+            <div className="errorLogin">{this.props.errorMessage}</div>
+            <p className="message">
+              No está registrado?{' '}
+              <a onClick={() => this.props.history.push('/signup')}>Registrarse</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-function mapStateToProps(state: AppStore) {
-    return { errorMessage: state.auth.errorMessage };
+function mapStateToProps(state: AppStore): StateProps {
+  return { errorMessage: state.auth.errorMessage };
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: (s: { username: string; password: string }, callback: Function) =>
-            dispatch(login(s, callback)),
-        dispatch
-    };
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppStore, void, Action>): DispatchProps => {
+  return {
+    login: (s: { username: string; password: string }, callback: Function) =>
+      dispatch(login(s, callback)),
+    dispatch
+  };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+export default connect<StateProps, DispatchProps, {}>(
+  mapStateToProps,
+  mapDispatchToProps
 )(Login);
 
-interface PropsFromState {
-    errorMessage: string;
+interface StateProps {
+  errorMessage: string;
 }
 
-interface PropsFromDispatch {
-    dispatch: Function;
-    login: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
+  login: (s: { username: string; password: string }, callback: Function) => void;
 }
 
-interface LoginState {
-    username: string;
-    password: string;
+interface IState {
+  username: string;
+  password: string;
 }
 
-type LoginProps = PropsFromState &
-    PropsFromDispatch &
-    CommonComponentProps;
+type LoginProps = StateProps & DispatchProps & CommonComponentProps;

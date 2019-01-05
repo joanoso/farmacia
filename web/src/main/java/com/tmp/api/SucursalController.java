@@ -1,8 +1,11 @@
 package com.tmp.api;
 
+import com.service.exception.BusinessRuntimeException;
 import com.tmp.domain.Sucursal;
 import com.tmp.domain.SucursalDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +28,9 @@ public class SucursalController {
     }
 
     @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
-    public List<Sucursal> getSucursales(@RequestBody Map<String, Object> params) {
+    public List<Sucursal> getSucursales(@RequestBody Map<String, Object> params) throws BusinessRuntimeException {
+
+        //throw new BusinessRuntimeException("PROBANDO");
         return sucursalDao.getSucursalesCustom(params);
     }
 

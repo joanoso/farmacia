@@ -8,30 +8,31 @@ import { Grid, Cell } from 'react-md';
 import { Card } from 'react-md';
 import { push } from 'connected-react-router';
 import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md';
+import { Dispatch } from 'redux';
 
 class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelectionTableState> {
-  constructor(props) {
+  constructor(props: MultiSelectionTableProps) {
     super(props);
-    this.state = { data: props.data, itemsSelected: [] };
+    this.state = { dataTable: props.data as Data[], itemsSelected: [] };
   }
 
   componentDidUpdate(prevProps: MultiSelectionTableProps) {
     const currentData = this.props.data;
     if (currentData !== prevProps.data) {
-      this.setState({ data: currentData });
+      this.setState({ dataTable: currentData as Data[] });
     }
   }
 
   toogle = (index: number, checked: boolean, ev) => {
-    const data = _.cloneDeep(this.state.data) as Data[];
+    const data = _.cloneDeep(this.state.dataTable) as Data[];
     data[index - 1].selected = checked;
 
-    const itemsSelected = _.filter(data, (it: Data) => {
+    const itemsSelected = _.filter(data, (it) => {
       return it.selected;
     });
 
     this.setState({
-      data,
+      dataTable: data,
       itemsSelected
     });
   };
@@ -52,7 +53,7 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelec
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {this.state.data.map((item: Data, i: number) => (
+                {this.state.dataTable.map((item: Data, i: number) => (
                   <TableRow key={i} selected={item.selected} onCheckboxClick={this.toogle}>
                     {this.props.config.columnsToShow.map((c: string, i: number) => (
                       <TableColumn key={i}>{item[c]}</TableColumn>
@@ -67,7 +68,7 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelec
               onClick={() => {
                 this.props.dispatch(
                   push(this.props.backPath, {
-                    productos: this.state.itemsSelected
+                    itemsSelected: this.state.itemsSelected
                   })
                 );
               }}
@@ -83,29 +84,23 @@ class MultiSelectionTable extends Component<MultiSelectionTableProps, MultiSelec
   }
 }
 
-function mapStateToProps(state: AppStore) {
-  return {};
-}
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
-  mapStateToProps,
+export default connect<{}, DispatchProps, OwnProps>(
+  null,
   mapDispatchToProps
 )(MultiSelectionTable);
 
-interface PropsFromState {}
-
-interface PropsFromDispatch {
-  dispatch: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
 }
 
-interface InjectedProps {
-  data: Data[];
+interface OwnProps {
+  data: object[];
   config: Config;
   backPath: string;
 }
@@ -115,10 +110,10 @@ interface Config {
   titles: string[];
 }
 
-type MultiSelectionTableProps = PropsFromState & PropsFromDispatch & InjectedProps;
+type MultiSelectionTableProps = DispatchProps & OwnProps;
 
 interface MultiSelectionTableState {
-  data: Data[];
+  dataTable: Data[];
   itemsSelected: object[];
 }
 

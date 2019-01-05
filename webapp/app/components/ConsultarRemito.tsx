@@ -8,17 +8,25 @@ import { Card, CardText, Grid, Cell, TextField, Button, SelectField } from 'reac
 import { push } from 'connected-react-router';
 import Table from './common/Table';
 import { paramService } from '../service/ParamService';
+import Remito from '../common/model/Remito';
+import { Dispatch } from 'redux';
 
-class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
-  constructor(props) {
+class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoState> {
+  constructor(props: ConsultarRemitoProps) {
     super(props);
-    this.state = { remitos: [] };
+    this.state = {
+      remitos: [],
+      estado: undefined,
+      tipo: undefined,
+      fechaRemito: undefined,
+      sucursalDestino: undefined
+    };
   }
 
-  onSearcRemitos(): any {
+  onSearchRemitos() {
     axios
       .post('/api/remito/filtered', {
-        fecha: this.state.fecha,
+        fecha: this.state.fechaRemito,
         estado: this.state.estado,
         tipo: this.state.tipo,
         sucursalDestino: this.state.sucursalDestino
@@ -26,12 +34,6 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
       .then((res) => {
         this.setState({ ...this.state, remitos: res.data });
       });
-  }
-
-  componentDidMount() {
-    /*    axios.get('/api/remito').then((res) => {
-      this.setState({ ...this.state, remitos: res.data });
-    }); */
   }
 
   handleChange = (value, event) => {
@@ -53,7 +55,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
     });
   };
 
-  renderRemitos = (remitos) => {
+  renderRemitos = (remitos: Remito[]) => {
     const tiposRemito = _.map(paramService.getTiposRemito(), (tr) => {
       return { value: tr.id.toString(), label: tr.descripcion };
     });
@@ -67,11 +69,11 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
       titles: ['Número', 'Tipo', 'Estado']
     };
 
-    const onEdit = (element) => {
+    const onEdit = (element: Remito) => {
       this.props.dispatch(push('/crearRemito', { element }));
     };
 
-    const canDeleteElement = (el) => {
+    const canDeleteElement = (el: Remito) => {
       return el.estado === 0 || el.estado === 1;
     };
 
@@ -97,7 +99,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
                   label="Tipo de Remito"
                   placeholder="Tipo de Remito"
                   className="md-cell"
-                  value={this.state.tipoRemito}
+                  value={this.state.tipo}
                   menuItems={tiposRemito}
                   onChange={this.handleChangeComplex('tipo')}
                 />
@@ -120,7 +122,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
                   id="sucursalDestino"
                   label="Nro Sucursal"
                   lineDirection="center"
-                  value={this.state.sucursal}
+                  value={this.state.sucursalDestino}
                   onChange={this.handleChange}
                 />
               </Cell>
@@ -133,7 +135,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
             <div className="buttons-right">
               <Button
                 onClick={() => {
-                  this.onSearcRemitos();
+                  this.onSearchRemitos();
                 }}
                 raised
                 primary
@@ -151,7 +153,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
             config={tableConfig}
             onEdit={onEdit}
             canDeleteElement={canDeleteElement}
-            onDeleteRemito={this.onDeleteRemito}
+            onDeleteItem={this.onDeleteRemito}
           />
         </Card>
       </div>
@@ -169,29 +171,37 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, any> {
   }
 }
 
-function mapStateToProps(state: AppStore) {
+function mapStateToProps(state: AppStore): StateProps {
   return {
     errorMessage: state.auth.errorMessage
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
     dispatch
   };
 };
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps
 )(ConsultarRemito);
 
-interface PropsFromState {
+interface StateProps {
   errorMessage: string;
 }
 
-interface PropsFromDispatch {
-  dispatch: Function;
+interface DispatchProps {
+  dispatch: Dispatch;
 }
 
-type ConsultarRemitoProps = PropsFromState & PropsFromDispatch;
+type ConsultarRemitoProps = StateProps & DispatchProps;
+
+interface ConsultarRemitoState {
+  fechaRemito: string;
+  estado: number;
+  tipo: number;
+  sucursalDestino: number;
+  remitos: Remito[];
+}
