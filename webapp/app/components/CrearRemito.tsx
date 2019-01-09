@@ -65,7 +65,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       } else {
         this.state = {
           estado: '1',
-          nroRemito: '',
+          nroRemito: undefined,
           sucursal: undefined,
           tipoRemito: '',
           productos: [],
@@ -134,6 +134,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       estado: this.state.estado,
       /*       nroRemito: this.state.nroRemito,
        */ sucursalDestino: this.state.sucursal,
+       id: this.state.nroRemito,
       tipo: this.state.tipoRemito
     };
 
@@ -154,6 +155,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
 
   render() {
     const { visible } = this.state;
+    const isEdit = this.state.nroRemito !== undefined;
     const tiposRemito = _.map(paramService.getTiposRemito(), (tr) => {
       return { value: tr.id.toString(), label: tr.descripcion };
     });
@@ -201,7 +203,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                     placeholder="Estado del Remito"
                     className="md-cell"
                     value={this.state.estado}
-                    disabled={true}
+                    disabled={!isEdit}
                     menuItems={estadosRemito}
                     onChange={this.handleChangeComplex('estado')}
                   />

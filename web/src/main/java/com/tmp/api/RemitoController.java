@@ -37,7 +37,7 @@ public class RemitoController {
 
         ObjectMapper mapper = new ObjectMapper();
         final Remito remito = mapper.convertValue(params.get("remito"), Remito.class);
-
+        remito.getDetallesRemito().clear();
         List<Map<String, Object>> productos = (List<Map<String, Object>>) params.get("productos");
         productos.stream().forEach(prod -> {
             DetalleRemito detalleRemito = new DetalleRemito();
@@ -52,6 +52,26 @@ public class RemitoController {
         Remito remitoSaved = remitoDao.save(remito);
         return remitoSaved.getId();
     }
+
+//    @RequestMapping(value = "/updateRemito", method = RequestMethod.POST, produces = {"application/json"})
+//    public Long updateRemito(@RequestBody Map<String, Object> params) {
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        final Remito remito = mapper.convertValue(params.get("remito"), Remito.class);
+//
+//        List<Map<String, Object>> productos = (List<Map<String, Object>>) params.get("productos");
+//        remito.getDetallesRemito().clear();
+//        productos.stream().forEach(prod -> {
+//            DetalleRemito detalleRemito = new DetalleRemito();
+//            detalleRemito.setCantidad(Long.valueOf(prod.get("cantidad").toString()));
+//            Producto producto = productoDao.findById(Long.valueOf(prod.get("id").toString())).get();
+//            detalleRemito.setProducto(producto);
+//            remito.getDetallesRemito().add(detalleRemito);
+//        });
+//
+//        Remito remitoSaved = remitoDao.save(remito);
+//        return remitoSaved.getId();
+//    }
 
     @RequestMapping(value = "/eliminarRemito", method = RequestMethod.POST, produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)

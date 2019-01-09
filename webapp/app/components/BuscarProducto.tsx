@@ -26,19 +26,24 @@ class BuscarProducto extends Component<BuscarProductoProps, BuscarProductoState>
   }
 
   onSearchProductos() {
-    axios
-      .get(`/api/productos/${this.state.searchValue}/${this.state.descripcion}`)
-      .then((res: AxiosResponse<Producto[]>) => {
-        const prods = _.filter(res.data, (producto) => {
-          return (
-            _.find(this.state.productsToSkip, (el) => {
-              return el.id === producto.id;
-            }) === undefined
-          );
-        });
+    const { searchValue, descripcion } = this.state;
+    let url = '/api/productos/';
 
-        this.setState({ ...this.state, productos: prods });
+    if (searchValue !== '' && descripcion !== '') {
+      url = `/api/productos/${this.state.searchValue}/${this.state.descripcion}`;
+    }
+
+    axios.get(url).then((res: AxiosResponse<Producto[]>) => {
+      const prods = _.filter(res.data, (producto) => {
+        return (
+          _.find(this.state.productsToSkip, (el) => {
+            return el.id === producto.id;
+          }) === undefined
+        );
       });
+
+      this.setState({ ...this.state, productos: prods });
+    });
   }
 
   handleChange = (value, event) => {
