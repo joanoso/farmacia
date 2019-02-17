@@ -20,7 +20,7 @@ class Login extends Component<LoginProps, IState> {
 
   onSubmit = () => {
     this.props.login(this.state, () => {
-      this.props.history.push('/feature');
+      this.props.history.push('/');
     });
   };
 
@@ -59,10 +59,10 @@ class Login extends Component<LoginProps, IState> {
               login
             </Button>
             <div className="errorLogin">{this.props.errorMessage}</div>
-            <p className="message">
+           {/*  <p className="message">
               No está registrado?{' '}
               <a onClick={() => this.props.history.push('/signup')}>Registrarse</a>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

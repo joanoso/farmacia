@@ -6,6 +6,10 @@
   top: -6px;
 }
 
+.md-picker-container.md-cell {
+  margin-left: 0px;
+}
+
 .md-menu--select-field .md-select-field__toggle {
   top: -6px;
 }
@@ -49,20 +53,19 @@
 
 .sucursal-field {
   div {
-    padding-left: 12px;
+    //padding-left: 12px;
     width: 90%;
     display: inline-block;
   }
 
-  .lupa-div{
+  .lupa-div {
     width: 10%;
   }
 
-  button{
+  button {
     top: 18px;
-    
+    float: right;
   }
-  
 }
 
 .md-icon {

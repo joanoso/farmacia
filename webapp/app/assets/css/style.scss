@@ -93,3 +93,16 @@ ul li {
 }
 
 /* ############# end general styles ############# */
+
+.grid-example > * {
+  height: 60px;
+  padding-right: 30px;
+
+  @media screen and (max-width: $md-grid-desktop-breakpoint) {
+    height: 70px;
+  }
+}
+
+.hidd {
+  display: none;
+}

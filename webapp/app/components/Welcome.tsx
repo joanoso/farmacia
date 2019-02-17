@@ -6,12 +6,12 @@ export default () => {
             <div className="row">
                 <div className="col-md-8 col-md-offset-2 landing-content">
                     <h1 className="landing-animate">
-                        Create cool template, For the better web
+                        FarmaSalud
                     </h1>
                     <div className="landing-subtitle landing-animate">
                         <h2>
-                            A modern type of website template for your new business brought
-                            to you
+                            Una solución integral para mejorar la logistica de la distribución
+                            de medicamentos.
                         </h2>
                     </div>
                 </div>

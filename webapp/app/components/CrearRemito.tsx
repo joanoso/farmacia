@@ -13,6 +13,10 @@ import { setCurrentObject } from '../reducers/form';
 import { paramService } from '../service/ParamService';
 import ProductosDeRemitoTable from './common/ProductosDeRemitoTable';
 import { Dispatch } from 'redux';
+import Test from '../report/Test';
+import * as html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
+import * as ReactPDF from 'react-pdf';
 
 class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
   constructor(props: CrearRemitoProps) {
@@ -134,7 +138,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       estado: this.state.estado,
       /*       nroRemito: this.state.nroRemito,
        */ sucursalDestino: this.state.sucursal,
-       id: this.state.nroRemito,
+      id: this.state.nroRemito,
       tipo: this.state.tipoRemito
     };
 
@@ -153,6 +157,19 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       });
   }
 
+  printDocument() {
+    const input = document.getElementById('divToPrint');
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'JPEG', 0, 0);
+      // pdf.output('dataurlnewwindow');
+      pdf.save('download.pdf');
+    
+      //window.open("buscarSucursal", '_blank');
+    });
+  }
+
   render() {
     const { visible } = this.state;
     const isEdit = this.state.nroRemito !== undefined;
@@ -168,10 +185,23 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       <div className="fullWidth">
         <div className="page-header">Crear Remito</div>
 
+        <button
+          onClick={() => {
+            this.printDocument();
+          }}
+        >
+          a
+        </button>
+
+        <div id="divToPrint" className="hisdd">
+          <div>Note: Here the dimensions of div are same as A4</div>
+          <div>You Can add any component here</div>
+        </div>
+
         <div className="page-content">
           <Card className="md-block-centered">
             <CardText>
-              <Grid className="grid-example">
+              <Grid className="grid-example" spacing={70} gutter={70}>
                 <Cell phoneSize={4} tabletSize={8} desktopSize={4}>
                   <DatePicker
                     name="fechaRemito"
@@ -208,8 +238,6 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                     onChange={this.handleChangeComplex('estado')}
                   />
                 </Cell>
-              </Grid>
-              <Grid>
                 <Cell phoneSize={4} tabletSize={8} desktopSize={4}>
                   <div className="sucursal-field">
                     <TextField
@@ -234,6 +262,9 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                   </div>
                 </Cell>
               </Grid>
+              {/* <Grid>
+               
+              </Grid> */}
             </CardText>
           </Card>
 
@@ -264,6 +295,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
 
           <div className="buttons-right">
             <Button
+              className="test"
               onClick={() => {
                 this.saveRemito();
               }}

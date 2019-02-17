@@ -24,14 +24,14 @@ class Header extends Component<StateProps & DispatchProps, HeaderState> {
   }
 
   componentDidMount() {
-    // this.props.loadUserFromToken();
+    this.props.loadUserFromToken();
   }
 
   displayUser = (user: User) => {
     if (!user) {
       return '';
     }
-    return user.nombre + ' ' + user.apellido;
+    return user.firstName + ' ' + user.lastName;
   };
 
   renderLinks() {

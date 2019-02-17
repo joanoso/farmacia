@@ -6,6 +6,7 @@ import { createAppStore } from './AppStore';
 import { createAppRouter } from './AppRouter';
 import { initApiInterceptor } from './common/util/ApiInterceptor';
 import { paramService } from './service/ParamService';
+import { push } from 'connected-react-router';
 
 const history = createBrowserHistory();
 const store = createAppStore(true, history);
@@ -16,5 +17,8 @@ paramService.initService();
 
 console.log('modo', process.env.node_env);
 
-// store.dispatch(push('/login'));
+if (!store.getState().auth.authenticated) {
+    store.dispatch(push('/login'));
+}
+
 ReactDOM.render(router, document.querySelector('#root'));

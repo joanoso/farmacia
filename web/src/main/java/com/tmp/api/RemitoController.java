@@ -1,9 +1,12 @@
 package com.tmp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tmp.bfwg.model.Usuario;
 import com.tmp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +32,10 @@ public class RemitoController {
 
     @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
     public List<Remito> getRemitosFiltered(@RequestBody Map<String, Object> params) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+
         return remitoDao.getRemitosCustom(params);
     }
 

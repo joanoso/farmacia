@@ -23,6 +23,7 @@ create table USUARIO
    last_name varchar(255) not null,
    email varchar(255) not null,
    phone_number varchar(255) not null,
+   id_sucursal NUMBER,
    enabled BOOLEAN not null,
    last_password_reset_date DATE,
    primary key(id)

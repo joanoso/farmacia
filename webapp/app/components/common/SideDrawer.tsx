@@ -27,7 +27,7 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
     this.handleVisibility();
   };
 
-  it = [
+  /*  it = [
     <Button
       flat
       iconChildren="home"
@@ -57,7 +57,7 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
       Consultar Remitos
     </Button>,
     <Button
-      onClick={() => this.onLogout()}
+      onClick={() => this.onMenuPress('/signout')}
       flat
       iconChildren="chat_bubble_outline"
       key="home4"
@@ -65,14 +65,59 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
     >
       Salir
     </Button>
-  ];
+  ]; */
 
-  onLogout() {
-    this.props.dispatch(push('/signout'));
+  renderItems(items: any[]) {
+    return items.map((it, index) => {
+      if (it.type === 'divider') {
+        return { divider: true };
+      } else {
+        if (!it.show && it.show !== undefined) {
+          return <span key={index} />;
+        }
+        return (
+          <Button
+            onClick={() => this.onMenuPress(it.path)}
+            flat
+            iconChildren={it.icon}
+            key={index}
+            className={it.className}
+          >
+            {it.label}
+          </Button>
+        );
+      }
+    });
   }
 
   render() {
+    const { authenticated } = this.props;
     const drawerClassname = 'drawer-custom' + (this.props.menuOpen ? '-open' : '');
+
+    const items = [
+      { label: 'Crear Remito', icon: 'home', className: 'drawer-button', path: '/crearRemito' },
+      { type: 'divider' },
+      {
+        label: 'Consultar Remitos',
+        icon: 'chat_bubble_outline',
+        className: 'drawer-button',
+        path: '/consultarRemitos'
+      },
+      {
+        label: 'Login',
+        icon: 'chat_bubble_outline',
+        className: 'drawer-button',
+        path: '/login',
+        show: !authenticated
+      },
+      {
+        label: 'Salir',
+        icon: 'chat_bubble_outline',
+        className: 'drawer-button',
+        path: '/signout',
+        show: authenticated
+      }
+    ];
 
     return (
       <div>
@@ -83,13 +128,15 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
           overlay={true}
           position={'left'}
           onVisibilityChange={this.handleVisibility}
-          navItems={this.it}
+          navItems={this.renderItems(items)}
           header={
             <div className="header-toolbar">
               <div className="user-info" />
               {this.props.user && (
                 <div className="footer">
-                  <p className="name">{this.props.user.nombre + ' ' + this.props.user.apellido}</p>
+                  <p className="name">
+                    {this.props.user.firstName + ' ' + this.props.user.lastName}
+                  </p>
                   <p className="mail">{this.props.user.email}</p>
                 </div>
               )}
@@ -109,12 +156,14 @@ interface DispatchProps {
 interface StateProps {
   menuOpen: boolean;
   user: User;
+  authenticated: boolean;
 }
 
 function mapStateToProps(state: AppStore): StateProps {
   return {
     menuOpen: state.sys.menuOpen,
-    user: state.auth.user
+    user: state.auth.user,
+    authenticated: state.auth.authenticated
   };
 }
 

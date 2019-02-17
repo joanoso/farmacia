@@ -2,6 +2,19 @@
 
 //@include react-md-theme-colors($md-light-blue-500, $md-orange-a-200, false);
 
+.md-title--toolbar {
+  line-height: 64px !important;
+}
+
+.md-btn--toolbar {
+  margin-bottom: 8px !important;
+  margin-top: 8px !important;
+}
+
+.material-icons.md-icon{
+  font-size: 24px !important;
+}
+
 .toolbar-custom {
   background-color: #fafafa !important;
   //color: $primary-color;

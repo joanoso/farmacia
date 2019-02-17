@@ -4,6 +4,7 @@ import com.tmp.bfwg.model.UserTokenState;
 import com.tmp.bfwg.model.Usuario;
 import com.tmp.bfwg.security.TokenHelper;
 import com.tmp.bfwg.security.auth.JwtAuthenticationRequest;
+import com.tmp.bfwg.service.UserService;
 import com.tmp.bfwg.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,9 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private UserService userService;
+
 //    @Autowired
 //    private DeviceProvider deviceProvider;
 
@@ -66,6 +70,17 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn, user));
     }
+
+    @RequestMapping(value ="/meFromToken",  method = RequestMethod.POST)
+    public Usuario meFromToken(@RequestBody Map<String, String> params){
+
+        String token = params.get("token");
+
+        String userName = tokenHelper.getUsernameFromToken(token);
+        Usuario user = userService.findByUsername(userName);
+        return user;
+    }
+
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public ResponseEntity<?> refreshAuthenticationToken(
