@@ -12,7 +12,7 @@ public class Remito implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "estado")
     private Long estado;

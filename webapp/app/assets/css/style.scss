@@ -106,3 +106,14 @@ ul li {
 .hidd {
   display: none;
 }
+
+.error-panel {
+  background-color: #c5032b;
+  padding: 10px;
+  border-radius: 5px;
+  width: fit-content;
+
+  p {
+    color: #fafafa;
+  }
+}

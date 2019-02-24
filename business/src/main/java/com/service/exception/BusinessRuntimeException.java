@@ -3,7 +3,7 @@ package com.service.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
+@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
 public class BusinessRuntimeException extends Exception {
     public BusinessRuntimeException() {
     }

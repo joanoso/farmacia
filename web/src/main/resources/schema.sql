@@ -42,7 +42,7 @@ create table USER_AUTHORITY (
 );
 
 create table SUCURSAL (
-   id NUMBER not null,
+   id NUMBER IDENTITY(88,1),
    numero NUMBER not null,
    nombre varchar(255) not null,
    direccion varchar(255) not null,

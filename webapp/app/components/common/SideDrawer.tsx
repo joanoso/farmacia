@@ -69,9 +69,14 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
 
   renderItems(items: any[]) {
     return items.map((it, index) => {
-      if (it.type === 'divider') {
+      switch (it.type) {
+        case 'divider':
         return { divider: true };
-      } else {
+
+        case 'subheader':
+        return { subheader: true, primaryText: 'HEADER' };
+
+        default:
         if (!it.show && it.show !== undefined) {
           return <span key={index} />;
         }
@@ -102,6 +107,18 @@ class SideDrawer extends Component<StateProps & DispatchProps, {}> {
         icon: 'chat_bubble_outline',
         className: 'drawer-button',
         path: '/consultarRemitos'
+      },
+      {
+        label: 'Crear Sucursal',
+        icon: 'chat_bubble_outline',
+        className: 'drawer-button',
+        path: '/crearSucursal'
+      },
+      {
+        label: 'Buscar Sucursal',
+        icon: 'chat_bubble_outline',
+        className: 'drawer-button',
+        path: '/buscarSucursal'
       },
       {
         label: 'Login',

@@ -13,9 +13,11 @@ import Signout from './components/auth/Signout';
 import Signup from './components/auth/Signup';
 import Feature from './Feature';
 import CrearRemito from './components/CrearRemito';
-import BuscarSucursal from './components/BuscarSucursal';
+import SeleccionarSucursal from './components/SeleccionarSucursal';
 import BuscarProducto from './components/BuscarProducto';
 import ConsultarRemito from './components/ConsultarRemito';
+import CrearSucursal from './components/sucursal/CrearSucursal';
+import BuscarSucursal from './components/sucursal/BuscarSucursal';
 
 export const createAppRouter = (store: Store<AppStore>, history: History) => {
   const app = (
@@ -28,9 +30,11 @@ export const createAppRouter = (store: Store<AppStore>, history: History) => {
           <Route path="/signout" component={Signout} />
           <Route path="/login" component={Login} />
           <Route path="/crearRemito" component={CrearRemito} />
+          <Route path="/seleccionarSucursal" component={SeleccionarSucursal} />
           <Route path="/buscarSucursal" component={BuscarSucursal} />
           <Route path="/buscarProductos" component={BuscarProducto} />
           <Route path="/consultarRemitos" component={ConsultarRemito} />
+          <Route path="/crearSucursal" component={CrearSucursal} />
         </App>
       </ConnectedRouter>
     </Provider>

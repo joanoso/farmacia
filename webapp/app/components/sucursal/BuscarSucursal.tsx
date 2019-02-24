@@ -4,13 +4,14 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { TextField, Button } from 'react-md';
-import { AppStore } from '../AppStore';
+import { AppStore } from '../../AppStore';
 import { Grid, Cell } from 'react-md';
 import { Card, CardText } from 'react-md';
 import { push } from 'connected-react-router';
-import SimpleSelectionTable from '../components/common/SimpleSelectionTable';
+import SimpleSelectionTable from '../common/SimpleSelectionTable';
 import { Dispatch } from 'redux';
-import Sucursal from '../common/model/Sucursal';
+import Sucursal from '../../common/model/Sucursal';
+import Table from '../common/Table';
 
 class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState> {
   constructor(props) {
@@ -23,6 +24,25 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
       localidad: ''
     };
   }
+
+  onDeleteSucursal = (item) => {
+    axios.post('/api/remito/eliminarSucursal', { id: item.id }).then((res) => {
+      const sucursales = _.cloneDeep(this.state.sucursales);
+      const sucursalesNew = _.filter(sucursales, (suc) => {
+        return suc.id !== item.id;
+      });
+
+      this.setState({ ...this.state, sucursales: sucursalesNew });
+    });
+  };
+
+  onEdit = (element: Sucursal) => {
+    this.props.dispatch(push('/crearSucursal', { element }));
+  };
+
+  canDeleteElement = (el: Sucursal) => {
+    return true;
+  };
 
   onSearchSucursales() {
     axios
@@ -128,11 +148,15 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
             </Button>
           </div>
 
-          <SimpleSelectionTable
-            data={this.state.sucursales}
-            config={this.tableConfig}
-            backPath={'/crearRemito'}
-          />
+          <Card className="md-block-centered">
+            <Table
+              data={this.state.sucursales}
+              config={this.tableConfig}
+              onEdit={this.onEdit}
+              canDeleteElement={this.canDeleteElement}
+              onDeleteItem={this.onDeleteSucursal}
+            />
+          </Card>
         </div>
       </div>
     );

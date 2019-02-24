@@ -30,6 +30,11 @@ export function initApiInterceptor(store): void {
           // return error
           break;
         }
+        case 405: {
+          // log.error('Error de negocio:' + (<any>response.data).errors);
+          // return error
+          break;
+        }
         case 401: {
           window.location.href = ctxPath + '/401.html';
           // log.error('Error de api authorization');

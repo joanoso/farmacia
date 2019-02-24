@@ -75,6 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/remito/**").permitAll()
             //.antMatchers("/api/sucursales/filtered").access("hasRole('ROLE_ADMIN')")
             .antMatchers("/api/sucursales/filtered").permitAll()
+            .antMatchers("/api/sucursales/**").permitAll()
             .anyRequest().authenticated().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
 

@@ -251,7 +251,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                       <Button
                         onClick={() => {
                           this.props.dispatch(setCurrentObject(this.state));
-                          this.props.dispatch(push('/buscarSucursal'));
+                          this.props.dispatch(push('/seleccionarSucursal'));
                         }}
                         icon
                         primary

@@ -13,6 +13,7 @@ import java.util.List;
 @Transactional
 public interface SucursalDao extends CrudRepository<Sucursal, Long>, CustomSucursalRepository {
 
-    List<Student> findByNombre(String nombre);
+    List<Sucursal> findByNombre(String nombre);
+    List<Sucursal> findByNumero(Long numero);
 
 }
