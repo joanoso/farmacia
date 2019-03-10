@@ -70,7 +70,11 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
     };
 
     const onEdit = (element: Remito) => {
-      this.props.dispatch(push('/crearRemito', { element }));
+      this.props.dispatch(push('/crearRemito', { element, isViewOnly: false }));
+    };
+
+    const onView = (element: Remito) => {
+      this.props.dispatch(push('/crearRemito', { element, isViewOnly: true }));
     };
 
     const canDeleteElement = (el: Remito) => {
@@ -152,7 +156,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
             data={this.state.remitos}
             config={tableConfig}
             onEdit={onEdit}
-            onView={onEdit}
+            onView={onView}
             canDeleteElement={canDeleteElement}
             onDeleteItem={this.onDeleteRemito}
           />

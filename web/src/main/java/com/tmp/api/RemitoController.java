@@ -33,8 +33,8 @@ public class RemitoController {
     @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
     public List<Remito> getRemitosFiltered(@RequestBody Map<String, Object> params) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Usuario user = (Usuario) auth.getPrincipal();
+       // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       // Usuario user = (Usuario) auth.getPrincipal();
 
         return remitoDao.getRemitosCustom(params);
     }

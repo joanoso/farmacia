@@ -35,6 +35,9 @@ public class Usuario implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "id_sucursal")
+    private Integer idSucursal;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -56,6 +59,14 @@ public class Usuario implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public String getUsername() {

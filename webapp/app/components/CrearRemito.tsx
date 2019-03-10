@@ -39,6 +39,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
         tipoRemito,
         sucursal: sucursalNew,
         productos: prods,
+        isViewOnly: false,
         visible: false
       };
     } else {
@@ -48,6 +49,8 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
 
       if (dotProp.get(props, 'history.location.state.element', undefined) !== undefined) {
         const { estado, id, sucursalDestino, tipo, detallesRemito } = element;
+
+        const isViewOnly = dotProp.get(props, 'history.location.state.isViewOnly', false);
 
         const prods = _.map(detallesRemito, (dr) => {
           return {
@@ -61,6 +64,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
         this.state = {
           estado: estado.toString(),
           nroRemito: id,
+          isViewOnly,
           sucursal: sucursalDestino,
           tipoRemito: tipo.toString(),
           productos: prods,
@@ -73,6 +77,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
           sucursal: undefined,
           tipoRemito: '',
           productos: [],
+          isViewOnly: false,
           visible: false
         };
       }
@@ -165,17 +170,25 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       pdf.addImage(imgData, 'JPEG', 0, 0);
       // pdf.output('dataurlnewwindow');
       pdf.save('download.pdf');
-    
+
       //window.open("buscarSucursal", '_blank');
     });
   }
 
   render() {
-    const { visible } = this.state;
+    const { visible, isViewOnly } = this.state;
+    const { idSucursal } = this.props;
     const isEdit = this.state.nroRemito !== undefined;
-    const tiposRemito = _.map(paramService.getTiposRemito(), (tr) => {
+    let tiposRemito = _.map(paramService.getTiposRemito(), (tr) => {
       return { value: tr.id.toString(), label: tr.descripcion };
     });
+
+    if (idSucursal === 1) {
+      // Solo permitimos simple
+      tiposRemito = _.filter(tiposRemito, (tr) => {
+        return tr.value === '1';
+      });
+    }
 
     const estadosRemito = _.map(paramService.getEstadosRemito(), (er) => {
       return { value: er.id.toString(), label: er.descripcion };
@@ -209,6 +222,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                     label="Fecha de Remito"
                     className="md-cell"
                     displayMode="portrait"
+                    disabled={isViewOnly}
                     onChange={this.handleChangeComplex('fechaRemito')}
                   />
                 </Cell>
@@ -220,6 +234,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                     placeholder="Tipo de Remito"
                     className="md-cell"
                     value={this.state.tipoRemito}
+                    disabled={isViewOnly}
                     menuItems={tiposRemito}
                     onChange={this.handleChangeComplex('tipoRemito')}
                   />
@@ -233,7 +248,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                     placeholder="Estado del Remito"
                     className="md-cell"
                     value={this.state.estado}
-                    disabled={!isEdit}
+                    disabled={isViewOnly}
                     menuItems={estadosRemito}
                     onChange={this.handleChangeComplex('estado')}
                   />
@@ -247,18 +262,20 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
                       value={this.sucursalMask(this.state.sucursal)}
                       disabled={true}
                     />
-                    <div className="lupa-div">
-                      <Button
-                        onClick={() => {
-                          this.props.dispatch(setCurrentObject(this.state));
-                          this.props.dispatch(push('/seleccionarSucursal'));
-                        }}
-                        icon
-                        primary
-                      >
-                        search
-                      </Button>
-                    </div>
+                    {!isViewOnly && (
+                      <div className="lupa-div">
+                        <Button
+                          onClick={() => {
+                            this.props.dispatch(setCurrentObject(this.state));
+                            this.props.dispatch(push('/seleccionarSucursal'));
+                          }}
+                          icon
+                          primary
+                        >
+                          search
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </Cell>
               </Grid>
@@ -275,21 +292,23 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
               {this.state.productos.length === 0 && (
                 <p>Actualmente no posee Productos agregados al remito</p>
               )}
-              <div className="buttons-right">
-                <Button
-                  onClick={() => {
-                    this.props.dispatch(setCurrentObject(this.state));
-                    this.props.dispatch(
-                      push('/buscarProductos', { productsAlreadyAdded: this.state.productos })
-                    );
-                  }}
-                  raised
-                  primary
-                  iconClassName="fa fa-search"
-                >
-                  Buscar
-                </Button>
-              </div>
+              {!isViewOnly && (
+                <div className="buttons-right">
+                  <Button
+                    onClick={() => {
+                      this.props.dispatch(setCurrentObject(this.state));
+                      this.props.dispatch(
+                        push('/buscarProductos', { productsAlreadyAdded: this.state.productos })
+                      );
+                    }}
+                    raised
+                    primary
+                    iconClassName="fa fa-search"
+                  >
+                    Buscar
+                  </Button>
+                </div>
+              )}
             </CardText>
           </Card>
 
@@ -329,7 +348,8 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
 function mapStateToProps(state: AppStore): StateProps {
   return {
     errorMessage: state.auth.errorMessage,
-    currentObj: state.form.currentObject
+    currentObj: state.form.currentObject,
+    idSucursal: state.auth.user.idSucursal
   };
 }
 
@@ -347,6 +367,7 @@ export default connect<StateProps, DispatchProps, {}>(
 interface StateProps {
   errorMessage: string;
   currentObj: any;
+  idSucursal: number;
 }
 
 interface DispatchProps {
@@ -362,6 +383,7 @@ interface CrearRemitoState {
   sucursal: number;
   productos: ProductoBase[];
   visible: boolean;
+  isViewOnly: boolean;
 }
 
 interface ProductoBase {
