@@ -2,13 +2,12 @@ package com.tmp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.exception.BusinessRuntimeException;
+import com.tmp.domain.Remito;
 import com.tmp.domain.Sucursal;
 import com.tmp.domain.SucursalDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -46,5 +45,13 @@ public class SucursalController {
         //throw new BusinessRuntimeException("PROBANDO");
         return sucursalDao.getSucursalesCustom(params);
     }
+
+    @RequestMapping(value = "/eliminarSucursal", method = RequestMethod.POST, produces = {"application/json"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void eliminarSucursal(@RequestBody Map<String, Object> params) {
+        Sucursal rm = sucursalDao.findById(Long.valueOf(params.get("id").toString())).get();
+        sucursalDao.delete(rm);
+    }
+
 
 }

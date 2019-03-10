@@ -152,6 +152,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
             data={this.state.remitos}
             config={tableConfig}
             onEdit={onEdit}
+            onView={onEdit}
             canDeleteElement={canDeleteElement}
             onDeleteItem={this.onDeleteRemito}
           />

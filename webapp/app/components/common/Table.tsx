@@ -55,7 +55,7 @@ class Table extends Component<TableProps, TableState> {
                     <Button icon primary onClick={() => this.props.onEdit(item)}>
                       edit
                     </Button>
-                    <Button icon primary>
+                    <Button icon primary onClick={() => this.props.onView(item)}>
                       visibility
                     </Button>
                   </TableColumn>
@@ -88,6 +88,7 @@ interface OwnProps {
   data: object[];
   config: Config;
   onEdit: Function;
+  onView: Function;
   canDeleteElement?: Function;
   onDeleteItem: Function;
 }

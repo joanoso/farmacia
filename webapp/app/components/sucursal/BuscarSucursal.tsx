@@ -26,7 +26,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
   }
 
   onDeleteSucursal = (item) => {
-    axios.post('/api/remito/eliminarSucursal', { id: item.id }).then((res) => {
+    axios.post('/api/sucursales/eliminarSucursal', { id: item.id }).then((res) => {
       const sucursales = _.cloneDeep(this.state.sucursales);
       const sucursalesNew = _.filter(sucursales, (suc) => {
         return suc.id !== item.id;
@@ -37,7 +37,11 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
   };
 
   onEdit = (element: Sucursal) => {
-    this.props.dispatch(push('/crearSucursal', { element }));
+    this.props.dispatch(push('/crearSucursal', { element, isViewOnly: false }));
+  };
+
+  onView = (element: Sucursal) => {
+    this.props.dispatch(push('/crearSucursal', { element, isViewOnly: true }));
   };
 
   canDeleteElement = (el: Sucursal) => {
@@ -129,15 +133,6 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
           <div className="buttons-right">
             <Button
               onClick={() => {
-                this.props.dispatch(push('/crearRemito'));
-              }}
-              raised
-              default
-            >
-              Volver
-            </Button>
-            <Button
-              onClick={() => {
                 this.onSearchSucursales();
               }}
               raised
@@ -153,6 +148,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
               data={this.state.sucursales}
               config={this.tableConfig}
               onEdit={this.onEdit}
+              onView={this.onView}
               canDeleteElement={this.canDeleteElement}
               onDeleteItem={this.onDeleteSucursal}
             />

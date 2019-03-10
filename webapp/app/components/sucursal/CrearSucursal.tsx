@@ -2,6 +2,7 @@ import { Component } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as _ from 'lodash';
 import * as React from 'react';
+import * as dotProp from 'dot-prop-immutable';
 import { connect } from 'react-redux';
 import { TextField, Button, DialogContainer } from 'react-md';
 import { Grid, Cell } from 'react-md';
@@ -14,16 +15,38 @@ import { AppStore } from '../../AppStore';
 class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
   constructor(props) {
     super(props);
-    this.state = {
-      sucursales: [],
-      sucursalSelected: undefined,
-      numero: undefined,
-      nombre: '',
-      localidad: '',
-      direccion: '',
-      visible: false,
-      error: ''
-    };
+
+    const element = dotProp.get(props, 'history.location.state.element', undefined);
+
+    if (dotProp.get(props, 'history.location.state.element', undefined) !== undefined) {
+      const { numero, id, nombre, direccion, localidad } = element;
+
+      const isViewOnly = dotProp.get(props, 'history.location.state.isViewOnly', false);
+
+      this.state = {
+        numero,
+        nombre,
+        localidad,
+        direccion,
+        id,
+        isViewOnly,
+        visible: false,
+        error: '',
+        isEdit: true
+      };
+    } else {
+      this.state = {
+        numero: undefined,
+        nombre: '',
+        localidad: '',
+        direccion: '',
+        id: undefined,
+        isViewOnly: false,
+        visible: false,
+        error: '',
+        isEdit: false
+      };
+    }
   }
 
   show = () => {
@@ -48,7 +71,8 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
       numero: this.state.numero,
       nombre: this.state.nombre,
       direccion: this.state.direccion,
-      localidad: this.state.localidad
+      localidad: this.state.localidad,
+      id: this.state.id
     };
 
     axios
@@ -59,14 +83,17 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
         this.show();
       })
       .catch((err: AxiosError) => {
-        this.setState({...this.state, error: err.response.data.message});
+        this.setState({ ...this.state, error: err.response.data.message });
       });
   };
 
   render() {
+    const { isEdit, isViewOnly } = this.state;
     return (
       <div className="fullWidth">
-        <div className="page-header">Crear Sucursal</div>
+        <div className="page-header">
+          {isEdit ? (isViewOnly ? 'Ver Sucursal' : 'Editar Sucursal') : 'Crear Sucursal'}
+        </div>
 
         <div className="page-content">
           <Card className="md-block-centered">
@@ -80,6 +107,7 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
                     lineDirection="center"
                     value={this.state.numero}
                     onChange={this.handleChange}
+                    disabled={isViewOnly}
                   />
                 </Cell>
                 <Cell phoneSize={4} tabletSize={8} desktopSize={12}>
@@ -90,6 +118,7 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
                     lineDirection="center"
                     value={this.state.nombre}
                     onChange={this.handleChange}
+                    disabled={isViewOnly}
                   />
                 </Cell>
                 <Cell phoneSize={4} tabletSize={8} desktopSize={12}>
@@ -100,6 +129,7 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
                     lineDirection="center"
                     value={this.state.localidad}
                     onChange={this.handleChange}
+                    disabled={isViewOnly}
                   />
                 </Cell>
                 <Cell phoneSize={4} tabletSize={8} desktopSize={12}>
@@ -110,6 +140,7 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
                     lineDirection="center"
                     value={this.state.direccion}
                     onChange={this.handleChange}
+                    disabled={isViewOnly}
                   />
                 </Cell>
               </Grid>
@@ -119,20 +150,32 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
           <div className="buttons-right">
             <Button
               onClick={() => {
-                this.agregarSucursal();
+                this.props.dispatch(push('/buscarSucursal'));
               }}
               raised
-              primary
-              iconClassName="fa fa-plus"
+              default
             >
-              Crear
+              Volver
             </Button>
+            {!isViewOnly && (
+              <Button
+                onClick={() => {
+                  this.agregarSucursal();
+                }}
+                raised
+                primary
+                iconClassName="fa fa-plus"
+              >
+                {isEdit ? 'Guardar' : 'Crear'}
+              </Button>
+            )}
           </div>
 
-          {this.state.error && <div className="error-panel">
-            <p>{this.state.error}</p>
-          </div>}
-
+          {this.state.error && (
+            <div className="error-panel">
+              <p>{this.state.error}</p>
+            </div>
+          )}
         </div>
         <DialogContainer
           id="simple-list-dialog"
@@ -146,7 +189,11 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
             </Button>
           ]}
         >
-          <p>Se ha generado la sucursal exitosamente</p>
+          <p>
+            {isEdit
+              ? 'Se ha guardado la sucursal exitosamente'
+              : 'Se ha generado la sucursal exitosamente'}
+          </p>
         </DialogContainer>
       </div>
     );
@@ -179,14 +226,15 @@ interface DispatchProps {
 type CrearSucursalProps = StateProps & DispatchProps;
 
 interface CrearSucursalState {
-  sucursales: SucursalBase[];
-  sucursalSelected: Sucursal;
   numero: number;
   nombre: string;
   localidad: string;
   direccion: string;
   visible: boolean;
+  id: number;
   error: string;
+  isEdit: boolean;
+  isViewOnly: boolean;
 }
 
 interface SucursalBase extends Sucursal {
