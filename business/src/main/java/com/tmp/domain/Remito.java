@@ -20,8 +20,11 @@ public class Remito implements Serializable {
     @Column(name = "tipo")
     private Long tipo;
 
+    @Column(name = "sucursal_origen")
+    private Integer sucursalOrigen;
+
     @Column(name = "sucursal_destino")
-    private Long sucursalDestino;
+    private Integer sucursalDestino;
 
     @OneToMany(
         cascade = CascadeType.ALL,
@@ -61,11 +64,19 @@ public class Remito implements Serializable {
         this.tipo = tipo;
     }
 
-    public Long getSucursalDestino() {
+    public Integer getSucursalDestino() {
         return sucursalDestino;
     }
 
-    public void setSucursalDestino(Long sucursalDestino) {
+    public void setSucursalDestino(Integer sucursalDestino) {
         this.sucursalDestino = sucursalDestino;
+    }
+
+    public Integer getSucursalOrigen() {
+        return sucursalOrigen;
+    }
+
+    public void setSucursalOrigen(Integer sucursalOrigen) {
+        this.sucursalOrigen = sucursalOrigen;
     }
 }

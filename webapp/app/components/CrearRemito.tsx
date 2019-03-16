@@ -127,15 +127,8 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
   };
 
   sucursalMask = (nroSucursal: number) => {
-    if (nroSucursal == null) {
-      return undefined;
-    }
-    if (nroSucursal === 1) {
-      return 'Lalala';
-    }
-    if (nroSucursal === 2) {
-      return 'Hibrido';
-    }
+    const sucursalNew = dotProp.get(this.props, 'history.location.state.itemSelected.nombre');
+    return sucursalNew;
   };
 
   saveRemito(): any {
@@ -176,7 +169,7 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
   }
 
   render() {
-    const { visible, isViewOnly } = this.state;
+    const { visible, isViewOnly, nroRemito } = this.state;
     const { idSucursal } = this.props;
     const isEdit = this.state.nroRemito !== undefined;
     let tiposRemito = _.map(paramService.getTiposRemito(), (tr) => {
@@ -190,9 +183,15 @@ class CrearRemito extends Component<CrearRemitoProps, CrearRemitoState> {
       });
     }
 
-    const estadosRemito = _.map(paramService.getEstadosRemito(), (er) => {
+    let estadosRemito = _.map(paramService.getEstadosRemito(), (er) => {
       return { value: er.id.toString(), label: er.descripcion };
     });
+
+    if (!nroRemito) {
+      estadosRemito = _.filter(estadosRemito, (er) => {
+        return er.value === '1';
+      });
+    }
 
     return (
       <div className="fullWidth">

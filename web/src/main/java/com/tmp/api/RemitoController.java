@@ -32,10 +32,6 @@ public class RemitoController {
 
     @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
     public List<Remito> getRemitosFiltered(@RequestBody Map<String, Object> params) {
-
-       // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-       // Usuario user = (Usuario) auth.getPrincipal();
-
         return remitoDao.getRemitosCustom(params);
     }
 
@@ -44,6 +40,11 @@ public class RemitoController {
 
         ObjectMapper mapper = new ObjectMapper();
         final Remito remito = mapper.convertValue(params.get("remito"), Remito.class);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario user = (Usuario) auth.getPrincipal();
+
+        remito.setSucursalOrigen(user.getIdSucursal());
         remito.getDetallesRemito().clear();
         List<Map<String, Object>> productos = (List<Map<String, Object>>) params.get("productos");
         productos.stream().forEach(prod -> {

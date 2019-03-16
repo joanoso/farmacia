@@ -2,7 +2,6 @@ package com.tmp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.exception.BusinessRuntimeException;
-import com.tmp.domain.Remito;
 import com.tmp.domain.Sucursal;
 import com.tmp.domain.SucursalDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class SucursalController {
         ObjectMapper mapper = new ObjectMapper();
         final Sucursal sucursal = mapper.convertValue(params.get("sucursal"), Sucursal.class);
 
-        if(sucursalDao.findByNumero(sucursal.getNumero()).size() != 0){
+        if (sucursal.getId() == null && sucursalDao.findByNumero(sucursal.getNumero()).size() != 0) {
             throw new BusinessRuntimeException("No puede ingresar el mismo número que otra sucursal");
         }
 

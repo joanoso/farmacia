@@ -10,6 +10,7 @@ import Table from './common/Table';
 import { paramService } from '../service/ParamService';
 import Remito from '../common/model/Remito';
 import { Dispatch } from 'redux';
+import { User } from '../common/model/User';
 
 class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoState> {
   constructor(props: ConsultarRemitoProps) {
@@ -78,7 +79,17 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
     };
 
     const canDeleteElement = (el: Remito) => {
-      return el.estado === 0 || el.estado === 1;
+      return (
+        (el.estado === 0 || el.estado === 1) && el.sucursalDestino === this.props.user.idSucursal
+      );
+    };
+
+    const canEditElement = (el: Remito) => {
+      return (
+        (el.estado === 0 || el.estado === 1) &&
+        (el.sucursalDestino === this.props.user.idSucursal ||
+          el.sucursalOrigen === this.props.user.idSucursal)
+      );
     };
 
     return (
@@ -157,6 +168,7 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
             config={tableConfig}
             onEdit={onEdit}
             onView={onView}
+            canEditElement={canEditElement}
             canDeleteElement={canDeleteElement}
             onDeleteItem={this.onDeleteRemito}
           />
@@ -178,7 +190,8 @@ class ConsultarRemito extends Component<ConsultarRemitoProps, ConsultarRemitoSta
 
 function mapStateToProps(state: AppStore): StateProps {
   return {
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    user: state.auth.user
   };
 }
 
@@ -195,6 +208,7 @@ export default connect<StateProps, DispatchProps, {}>(
 
 interface StateProps {
   errorMessage: string;
+  user: User;
 }
 
 interface DispatchProps {

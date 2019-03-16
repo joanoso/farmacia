@@ -37,9 +37,9 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
     } else {
       this.state = {
         numero: undefined,
-        nombre: '',
-        localidad: '',
-        direccion: '',
+        nombre: undefined,
+        localidad: undefined,
+        direccion: undefined,
         id: undefined,
         isViewOnly: false,
         visible: false,
@@ -88,7 +88,8 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
   };
 
   render() {
-    const { isEdit, isViewOnly } = this.state;
+    const { isEdit, isViewOnly, numero, nombre, direccion, localidad } = this.state;
+    const canSave = !_.isNil(numero) && !_.isNil(nombre) && !_.isNil(direccion) && !_.isNil(localidad);
     return (
       <div className="fullWidth">
         <div className="page-header">
@@ -159,6 +160,7 @@ class CrearSucursal extends Component<CrearSucursalProps, CrearSucursalState> {
             </Button>
             {!isViewOnly && (
               <Button
+                disabled={!canSave}
                 onClick={() => {
                   this.agregarSucursal();
                 }}

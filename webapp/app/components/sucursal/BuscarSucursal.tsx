@@ -45,7 +45,11 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
   };
 
   canDeleteElement = (el: Sucursal) => {
-    return true;
+    return el.id !== 1;
+  };
+
+  canEditElement = (el: Sucursal) => {
+    return el.id !== 1;
   };
 
   onSearchSucursales() {
@@ -150,6 +154,7 @@ class BuscarSucursal extends Component<BuscarSucursalProps, BuscarSucursalState>
               onEdit={this.onEdit}
               onView={this.onView}
               canDeleteElement={this.canDeleteElement}
+              canEditElement={this.canEditElement}
               onDeleteItem={this.onDeleteSucursal}
             />
           </Card>
