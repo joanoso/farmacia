@@ -70,6 +70,7 @@ create table REMITO (
    id NUMBER not null,
    estado NUMBER not null,
    tipo NUMBER not null,
+   sucursal_origen NUMBER not null,
    sucursal_destino NUMBER not null,
    primary key(id)
 );

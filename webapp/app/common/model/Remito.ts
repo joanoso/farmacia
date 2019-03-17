@@ -3,4 +3,5 @@ export default interface Remito {
     estado: number;
     tipo: number;
     sucursalDestino: number;
+    sucursalOrigen: number;
 }
