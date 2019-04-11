@@ -1,4 +1,4 @@
-package com.tmp.bfwg.model;
+package com.tmp.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -6,28 +6,29 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 @Entity
-@Table(name="AUTHORITY")
+@Table(name = "AUTHORITY")
 public class Authority implements GrantedAuthority {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
-    String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "name")
+    UserRoleName name;
 
     @Override
     public String getAuthority() {
-        return name;
+        return name.name();
     }
 
-    public void setName(String name) {
+    public void setName(UserRoleName name) {
         this.name = name;
     }
 
     @JsonIgnore
-    public String getName() {
+    public UserRoleName getName() {
         return name;
     }
 

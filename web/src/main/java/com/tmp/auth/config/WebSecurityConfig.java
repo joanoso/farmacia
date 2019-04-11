@@ -1,9 +1,9 @@
-package com.tmp.bfwg.config;
+package com.tmp.auth.config;
 
-import com.tmp.bfwg.security.TokenHelper;
-import com.tmp.bfwg.security.auth.RestAuthenticationEntryPoint;
-import com.tmp.bfwg.security.auth.TokenAuthenticationFilter;
-import com.tmp.bfwg.service.impl.CustomUserDetailsService;
+import com.tmp.auth.security.TokenHelper;
+import com.tmp.auth.security.auth.RestAuthenticationEntryPoint;
+import com.tmp.auth.security.auth.TokenAuthenticationFilter;
+import com.tmp.auth.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
@@ -69,10 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/auth/**").permitAll()
             .antMatchers("/index.html").permitAll()
             .antMatchers("/api/system").permitAll()
-            .antMatchers("/api/students").permitAll()
             .antMatchers("/api/productos").permitAll()
             .antMatchers("/api/productos/**").permitAll()
-            .antMatchers("/api/remito/**").permitAll()
             //.antMatchers("/api/sucursales/filtered").access("hasRole('ROLE_ADMIN')")
             .antMatchers("/api/sucursales/filtered").permitAll()
             .antMatchers("/api/sucursales/eliminarSucursal").permitAll()

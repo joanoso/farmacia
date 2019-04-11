@@ -1,4 +1,4 @@
-package com.tmp.bfwg.model;
+package com.tmp.auth.model;
 
 public class UserTokenState {
     private String access_token;

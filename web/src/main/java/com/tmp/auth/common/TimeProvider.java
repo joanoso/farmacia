@@ -1,4 +1,4 @@
-package com.tmp.bfwg.common;
+package com.tmp.auth.common;
 
 import org.springframework.stereotype.Component;
 

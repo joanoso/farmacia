@@ -1,6 +1,6 @@
-package com.tmp.bfwg.security.auth;
+package com.tmp.auth.security.auth;
 
-import com.tmp.bfwg.security.TokenHelper;
+import com.tmp.auth.security.TokenHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;

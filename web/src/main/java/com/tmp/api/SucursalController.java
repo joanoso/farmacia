@@ -52,5 +52,4 @@ public class SucursalController {
         sucursalDao.delete(rm);
     }
 
-
 }

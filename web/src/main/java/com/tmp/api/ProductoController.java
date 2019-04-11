@@ -43,18 +43,4 @@ public class ProductoController {
 
     }
 
-
-//    @RequestMapping(value = "/agregarRemito", method = RequestMethod.POST, produces = {"application/json"})
-//    public List<Remito> agregarRemito(@RequestBody Map<String, Object> params) {
-//
-//
-//
-//        return (List<Remito>) remitoDao.findAll();
-//    }
-
-//    @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
-//    public List<Remito> getRemitos(@RequestBody Map<String, Object> params) {
-//      //  return remitoDao.getSucursalesCustom(params);
-//    }
-
 }

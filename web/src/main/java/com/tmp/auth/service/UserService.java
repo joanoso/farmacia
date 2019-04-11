@@ -1,7 +1,7 @@
-package com.tmp.bfwg.service;
+package com.tmp.auth.service;
 
 
-import com.tmp.bfwg.model.Usuario;
+import com.tmp.auth.model.Usuario;
 
 import java.util.List;
 

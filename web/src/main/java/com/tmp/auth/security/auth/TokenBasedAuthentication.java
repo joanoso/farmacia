@@ -1,4 +1,4 @@
-package com.tmp.bfwg.security.auth;
+package com.tmp.auth.security.auth;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

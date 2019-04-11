@@ -1,8 +1,3 @@
-insert into student
-values(10001,'Ranga muere', 'E1234567');
-
-insert into student
-values(10002,'Ravi', 'A1234568');
 
 -- 123 es la clave
 INSERT INTO USUARIO (id, username, password, first_name, last_name, email, phone_number, enabled, last_password_reset_date, id_sucursal) VALUES (1, 'central', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Usuario', 'Central', 'user@example.com', '+1234567890', true, null, 1);

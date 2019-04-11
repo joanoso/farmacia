@@ -1,4 +1,4 @@
-package com.tmp.bfwg.security.auth;
+package com.tmp.auth.security.auth;
 
 public class JwtAuthenticationRequest {
     private String username;

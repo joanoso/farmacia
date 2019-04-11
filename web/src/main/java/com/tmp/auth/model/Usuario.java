@@ -1,4 +1,4 @@
-package com.tmp.bfwg.model;
+package com.tmp.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;

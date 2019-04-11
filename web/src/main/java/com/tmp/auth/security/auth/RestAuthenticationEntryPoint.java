@@ -1,4 +1,4 @@
-package com.tmp.bfwg.security.auth;
+package com.tmp.auth.security.auth;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

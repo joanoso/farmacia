@@ -1,7 +1,7 @@
-package com.tmp.bfwg.rest;
+package com.tmp.auth.rest;
 
-import com.tmp.bfwg.model.Usuario;
-import com.tmp.bfwg.service.UserService;
+import com.tmp.auth.model.Usuario;
+import com.tmp.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

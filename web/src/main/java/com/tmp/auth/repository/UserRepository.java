@@ -1,6 +1,6 @@
-package com.tmp.bfwg.repository;
+package com.tmp.auth.repository;
 
-import com.tmp.bfwg.model.Usuario;
+import com.tmp.auth.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<Usuario, Long> {

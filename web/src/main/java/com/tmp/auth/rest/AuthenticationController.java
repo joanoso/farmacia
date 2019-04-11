@@ -1,11 +1,11 @@
-package com.tmp.bfwg.rest;
+package com.tmp.auth.rest;
 
-import com.tmp.bfwg.model.UserTokenState;
-import com.tmp.bfwg.model.Usuario;
-import com.tmp.bfwg.security.TokenHelper;
-import com.tmp.bfwg.security.auth.JwtAuthenticationRequest;
-import com.tmp.bfwg.service.UserService;
-import com.tmp.bfwg.service.impl.CustomUserDetailsService;
+import com.tmp.auth.model.UserTokenState;
+import com.tmp.auth.model.Usuario;
+import com.tmp.auth.security.TokenHelper;
+import com.tmp.auth.security.auth.JwtAuthenticationRequest;
+import com.tmp.auth.service.UserService;
+import com.tmp.auth.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,9 +42,6 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private DeviceProvider deviceProvider;
-
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json"})
     public ResponseEntity<?> createAuthenticationToken(
         @RequestBody JwtAuthenticationRequest authenticationRequest,
@@ -71,8 +68,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(new UserTokenState(jws, expiresIn, user));
     }
 
-    @RequestMapping(value ="/meFromToken",  method = RequestMethod.POST)
-    public Usuario meFromToken(@RequestBody Map<String, String> params){
+    @RequestMapping(value = "/meFromToken", method = RequestMethod.POST)
+    public Usuario meFromToken(@RequestBody Map<String, String> params) {
 
         String token = params.get("token");
 
@@ -91,15 +88,13 @@ public class AuthenticationController {
 
         String authToken = tokenHelper.getToken(request);
 
-        //  Device device = deviceProvider.getCurrentDevice(request);
-
         if (authToken != null && principal != null) {
 
             // TODO check user password last update
             String refreshedToken = tokenHelper.refreshToken(authToken);
             int expiresIn = tokenHelper.getExpiredIn();
 
-		// todo Buscar User aca tmb
+            // todo Buscar User aca tmb
             return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, null));
         } else {
             UserTokenState userTokenState = new UserTokenState();

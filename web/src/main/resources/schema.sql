@@ -1,19 +1,3 @@
-create table student
-(
-   id NUMBER not null,
-   name varchar(255) not null,
-   passport_number varchar(255) not null,
-   primary key(id)
-);
-
---create table usuario
---(
---   id NUMBER not null,
---   username varchar(255) not null,
---   password varchar(255) not null,
---   primary key(id)
---);
-
 create table USUARIO
 (
    id NUMBER not null,

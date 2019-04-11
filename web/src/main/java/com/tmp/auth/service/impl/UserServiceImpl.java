@@ -1,8 +1,8 @@
-package com.tmp.bfwg.service.impl;
+package com.tmp.auth.service.impl;
 
-import com.tmp.bfwg.model.Usuario;
-import com.tmp.bfwg.repository.UserRepository;
-import com.tmp.bfwg.service.UserService;
+import com.tmp.auth.model.Usuario;
+import com.tmp.auth.repository.UserRepository;
+import com.tmp.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

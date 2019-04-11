@@ -1,7 +1,7 @@
-package com.tmp.bfwg.service.impl;
+package com.tmp.auth.service.impl;
 
-import com.tmp.bfwg.model.Usuario;
-import com.tmp.bfwg.repository.UserRepository;
+import com.tmp.auth.model.Usuario;
+import com.tmp.auth.repository.UserRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

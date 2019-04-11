@@ -1,7 +1,7 @@
 package com.tmp.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmp.bfwg.model.Usuario;
+import com.tmp.auth.model.Usuario;
 import com.tmp.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,25 +61,6 @@ public class RemitoController {
         return remitoSaved.getId();
     }
 
-//    @RequestMapping(value = "/updateRemito", method = RequestMethod.POST, produces = {"application/json"})
-//    public Long updateRemito(@RequestBody Map<String, Object> params) {
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        final Remito remito = mapper.convertValue(params.get("remito"), Remito.class);
-//
-//        List<Map<String, Object>> productos = (List<Map<String, Object>>) params.get("productos");
-//        remito.getDetallesRemito().clear();
-//        productos.stream().forEach(prod -> {
-//            DetalleRemito detalleRemito = new DetalleRemito();
-//            detalleRemito.setCantidad(Long.valueOf(prod.get("cantidad").toString()));
-//            Producto producto = productoDao.findById(Long.valueOf(prod.get("id").toString())).get();
-//            detalleRemito.setProducto(producto);
-//            remito.getDetallesRemito().add(detalleRemito);
-//        });
-//
-//        Remito remitoSaved = remitoDao.save(remito);
-//        return remitoSaved.getId();
-//    }
 
     @RequestMapping(value = "/eliminarRemito", method = RequestMethod.POST, produces = {"application/json"})
     @ResponseStatus(value = HttpStatus.OK)
@@ -92,11 +73,5 @@ public class RemitoController {
 
         remitoDao.delete(rm);
     }
-
-
-//    @RequestMapping(value = "/filtered", method = RequestMethod.POST, produces = {"application/json"})
-//    public List<Remito> getRemitos(@RequestBody Map<String, Object> params) {
-//      //  return remitoDao.getSucursalesCustom(params);
-//    }
 
 }

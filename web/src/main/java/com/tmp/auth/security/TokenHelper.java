@@ -1,7 +1,7 @@
-package com.tmp.bfwg.security;
+package com.tmp.auth.security;
 
-import com.tmp.bfwg.common.TimeProvider;
-import com.tmp.bfwg.model.Usuario;
+import com.tmp.auth.common.TimeProvider;
+import com.tmp.auth.model.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
