@@ -69,16 +69,16 @@ public class TokenHelper {
         return issueAt;
     }
 
-    public String getAudienceFromToken(String token) {
-        String audience;
-        try {
-            final Claims claims = this.getAllClaimsFromToken(token);
-            audience = claims.getAudience();
-        } catch (Exception e) {
-            audience = null;
-        }
-        return audience;
-    }
+//    public String getAudienceFromToken(String token) {
+//        String audience;
+//        try {
+//            final Claims claims = this.getAllClaimsFromToken(token);
+//            audience = claims.getAudience();
+//        } catch (Exception e) {
+//            audience = null;
+//        }
+//        return audience;
+//    }
 
     public String refreshToken(String token) {
         String refreshedToken;

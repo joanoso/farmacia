@@ -1,4 +1,5 @@
 export interface User {
+  authorities: Authorities[];
   email: string;
   enabled: boolean;
   firstName: string;
@@ -6,5 +7,10 @@ export interface User {
   lastName: string;
   phoneNumber: string;
   username: string;
+  lastPasswordResetDate: Date;
   idSucursal: number;
+}
+
+interface Authorities {
+  authority: string;
 }

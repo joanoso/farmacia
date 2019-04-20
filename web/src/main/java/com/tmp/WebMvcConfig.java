@@ -30,10 +30,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 //        return registrationBean;
 //    }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.html");
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName("forward:/index.html");
+//    }
 
     // During development, webpack server runs on localhost:8080
     // Make the browser happy by returning CORS headers in this case

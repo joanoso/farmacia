@@ -37,7 +37,12 @@ public class SystemController {
             .filter(ps -> ps instanceof EnumerablePropertySource && ps.getName().contains("application.properties"))
             .map(ps -> ((EnumerablePropertySource) ps).getPropertyNames())
             .flatMap(Arrays::<String>stream)
-            .forEach(propName -> props.setProperty(propName, env.getProperty(propName)));
+            .forEach(propName ->
+            {
+                if (!propName.startsWith("spring")) {
+                    props.setProperty(propName, env.getProperty(propName));
+                }
+            });
 
         Map<String, Object> system = new HashMap();
         String serverTime = new SimpleDateFormat(this.defaultDateFormatPattern).format(new Date());

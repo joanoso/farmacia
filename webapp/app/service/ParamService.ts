@@ -36,10 +36,10 @@ class ParamService {
       }
     ];
 
-    /* axios.get('api/params/estadosRemito').then(response => {
+    axios.get('api/params/estadosRemito').then((response) => {
       this.estadosRemito = response.data;
     });
-    axios.get('api/params/tiposRemito').then(response => {
+    /*axios.get('api/params/tiposRemito').then(response => {
       this.tiposRemito = response.data;
     }); */
   }

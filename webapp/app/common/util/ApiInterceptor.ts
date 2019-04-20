@@ -42,29 +42,10 @@ export function initApiInterceptor(store): void {
         }
         case 500:
         case 450: {
-          /*log.error('Error de sistema en servicio Rest');
-                    if (rootScope.system) {
-                      ctxPath = rootScope.system.contextPath || '.';
-                      if (response.data && response.data['errors']) {
-                        state.go('app.errorSistema', {
-                          'error': response.data['errors'],
-                          'stack': response.data['stack']
-                        });
-                      } else {
-                        state.go('app.errorSistema', {
-                          'error': 'Error sin evaluación',
-                          'stack': '' + response
-                        });
-                      }
-                    } else {
-                      window.location.href = ctxPath + '/500.html';
-                    }*/
           store.dispatch(push('app.errorSistema'));
-          /*window.location.href = ctxPath + '/500.html';*/
           break;
         }
         default: {
-          // log.error('Error Inesperado');
           window.location.href = ctxPath + '/500.html';
         }
       }

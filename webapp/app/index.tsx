@@ -7,18 +7,20 @@ import { createAppRouter } from './AppRouter';
 import { initApiInterceptor } from './common/util/ApiInterceptor';
 import { paramService } from './service/ParamService';
 import { push } from 'connected-react-router';
+import * as sys from './reducers/sys';
+import { setSystem } from './actions/SysActions';
 
 const history = createBrowserHistory();
 const store = createAppStore(true, history);
 const router = createAppRouter(store, history);
 initApiInterceptor(store);
-
 paramService.initService();
-
-console.log('modo', process.env.node_env);
+sys.getSystem().then((system) => {
+  store.dispatch(setSystem(system));
+});
 
 if (!store.getState().auth.authenticated) {
-    store.dispatch(push('/login'));
+  store.dispatch(push('/login'));
 }
 
 ReactDOM.render(router, document.querySelector('#root'));

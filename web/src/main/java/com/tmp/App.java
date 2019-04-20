@@ -10,13 +10,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-//@EnableWebMvc
 @SpringBootApplication
 @PropertySources({
     @PropertySource("classpath:version.properties")
 })
 public class App implements ApplicationListener<ContextRefreshedEvent> {
-
 
     private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
@@ -30,7 +28,7 @@ public class App implements ApplicationListener<ContextRefreshedEvent> {
         LOG.info("=======================================");
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(App.class, args);
 
     }
